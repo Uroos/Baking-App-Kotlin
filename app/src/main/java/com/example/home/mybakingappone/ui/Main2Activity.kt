@@ -15,7 +15,7 @@ class Main2Activity : AppCompatActivity(), MasterListFragment.OnImageClickListen
     }
 
     override fun onImageSelected(recipe: Recipes?) {
-        val intent = Intent(this, RecipeDetail::class.java)
+        val intent = Intent(this, RecipeDetail2::class.java)
         var bundle = Bundle()
         bundle.putSerializable(getString(R.string.main_activity_bundle_recipe), recipe)
         intent.putExtras(bundle)

@@ -3,21 +3,15 @@ package com.example.home.mybakingappone;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
-import com.example.home.mybakingappone.model.Ingredients;
 import com.example.home.mybakingappone.model.Recipes;
-import com.example.home.mybakingappone.ui.MainActivity;
+import com.example.home.mybakingappone.ui.Main2Activity;
 import com.example.home.mybakingappone.ui.RecipeDetail;
-
-import java.util.ArrayList;
-
-import timber.log.Timber;
 
 /**
  * Implementation of App Widget functionality.
@@ -33,12 +27,12 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent;
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
         if (recipe == null) {
-            intent = new Intent(context, MainActivity.class);
+            intent = new Intent(context, Main2Activity.class);
             pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         } else { // Set on click to open the corresponding detail activity
-            Intent mainIntent = new Intent(context, MainActivity.class);
+            Intent mainIntent = new Intent(context, Main2Activity.class);
             stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addParentStack(Main2Activity.class);
             stackBuilder.addNextIntent(mainIntent);
 
             intent = new Intent(context, RecipeDetail.class);
@@ -49,7 +43,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             stackBuilder.addNextIntent(intent);
             pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         }
-        //Create an Intent to launch either MainActivity or RecipeDetail Activitywhen clicked.
+        //Create an Intent to launch either Main2Activity or RecipeDetailActivity when clicked.
         views.setOnClickPendingIntent(R.id.widget_relative_layout, pendingIntent);
         views.setTextViewText(R.id.recipe_widget_text, ingredients);
         if (recipe == null) {

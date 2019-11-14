@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
-    <!-- Two containers for each part of RecipeStepDetail.java -->
+    <!-- Two containers for each part of RecipeStepDetail2.java -->
     <!-- This container holds the VideoFragment  -->
     <FrameLayout
         android:id="@+id/video_container"

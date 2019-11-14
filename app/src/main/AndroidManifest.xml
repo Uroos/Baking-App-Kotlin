@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.home.mybakingappone">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.Main2Activity"
             android:launchMode="singleTop">
@@ -19,18 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RecipeStepDetail2"
+
+        <activity android:name=".ui.RecipeDetail2"
             android:label="Details"
             android:launchMode="singleTop"/>
-        <activity android:name=".ui.MainActivity" />
+
         <activity
-            android:name=".ui.RecipeDetail"
-            android:label="Details"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".ui.RecipeStepDetail"
+            android:name=".ui.RecipeStepDetail2"
             android:label="Recipe Steps"
-            android:parentActivityName=".ui.RecipeDetail" />
+            android:parentActivityName=".ui.RecipeDetail2" />
 
         <receiver android:name=".RecipeWidgetProvider">
             <intent-filter>
@@ -47,8 +46,5 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".RecipeUpdateService" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

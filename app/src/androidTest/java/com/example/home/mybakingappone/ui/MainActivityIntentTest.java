@@ -42,8 +42,8 @@ public class MainActivityIntentTest {
 
     Bundle bundle = new Bundle();
     @Rule
-    public IntentsTestRule<MainActivity> mActivityRule = new IntentsTestRule<>(
-            MainActivity.class);
+    public IntentsTestRule<Main2Activity> mActivityRule = new IntentsTestRule<>(
+            Main2Activity.class);
     @Before
     public void stubAllExternalIntents() {
         // By default Espresso Intents does not stub any Intents. Stubbing needs to be setup before

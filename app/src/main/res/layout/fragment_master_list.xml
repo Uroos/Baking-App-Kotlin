@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.Main2Activity">
 
     <!-- May need to put drawable selector here. it is already present in list item-->
     <android.support.v7.widget.RecyclerView

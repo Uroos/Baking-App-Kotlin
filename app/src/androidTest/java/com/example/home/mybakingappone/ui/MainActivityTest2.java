@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 public class MainActivityTest2 {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<Main2Activity> mActivityTestRule = new ActivityTestRule<>(Main2Activity.class);
 
     @Test
     public void mainActivityTest2() {

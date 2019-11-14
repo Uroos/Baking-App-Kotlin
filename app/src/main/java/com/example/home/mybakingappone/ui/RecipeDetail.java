@@ -125,7 +125,7 @@ public class RecipeDetail extends AppCompatActivity implements RecipeStepFragmen
                     // with a synthesized back stack.
                     TaskStackBuilder
                             .from(this)
-                            .addNextIntent(new Intent(this, MainActivity.class))
+                            .addNextIntent(new Intent(this, Main2Activity.class))
                             .addNextIntent(upIntent).startActivities();
                     finish();
                 } else {
