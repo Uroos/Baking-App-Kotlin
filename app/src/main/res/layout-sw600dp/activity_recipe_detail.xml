@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recipe_steps_container"
+        style="@style/LeftPane" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark" />
+
+    <LinearLayout
+        android:id="@+id/video_description_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/margin4"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/video_container"
+            style="@style/RightPaneVideo" />
+
+        <!-- This container holds the step description -->
+        <FrameLayout
+            android:id="@+id/step_instruction_container"
+            style="@style/RightPaneDescription" />
+    </LinearLayout>
+</LinearLayout>

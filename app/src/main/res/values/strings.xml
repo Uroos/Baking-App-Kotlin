@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">My Baking App One</string>
+    <string name="appwidget_text">This is your recipe</string>
+    <string name="add_widget">Add widget</string>
+    <string name="recipe_title">Recipes</string>
+
+    <!-- Strings of package ui. -->
+    <string name="error_message">No network connection. Please try again.</string>
+    <string name="main_activity_bundle_recipe">recipe_info</string>
+    <string name="recipe_detail_intent_description">step_description</string>
+    <string name="recipe_detail_intent_url">video_url</string>
+    <string name="video_fragment_outstate_playwhenready">play_when_ready</string>
+    <string name="video_fragment_outstate_currentWindow">current_window</string>
+    <string name="video_fragment_outstate_playbackposition">play_back_position</string>
+    <string name="recipe_step_description_fragment_outstate_description">description</string>
+
+    <!-- Strings of Widget Classes. -->
+    <string name="widget_key_recipe">recipe</string>
+    <string name="widget_key_ingredients">ingredients</string>
+    <string name="empty_view_text">No recipe to display</string>
+    <string name="fab_text">Press to add to widget</string>
+</resources>

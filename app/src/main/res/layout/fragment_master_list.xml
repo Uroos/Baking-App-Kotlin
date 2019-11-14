@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <!-- May need to put drawable selector here. it is already present in list item-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_recipes"
+        style="@style/RecyclerViewMain" />
+
+    <TextView
+        android:id="@+id/tv_error_message_display"
+        style="@style/ErrorMessage"
+        tools:text="An error has occured" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        style="@style/ProgressBar" />
+
+
+</FrameLayout>
+
+

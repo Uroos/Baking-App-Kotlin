@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Only adding id to scroll view saves its state.-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height40"
+        android:background="@color/colorPrimaryLight">
+
+        <TextView
+            android:id="@+id/tv_recipe_name"
+            style="@style/RecipeName"
+            tools:text="Recipe Name"/>
+    </FrameLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView_recipe_step"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.RecipeDetail">
+
+            <TextView
+                android:id="@+id/tv_ingredients"
+                style="@style/Ingredients"
+                tools:text="Ingredients will go here" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin4"
+                android:layout_weight="8">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_recipe_step"
+                    style="@style/RecyclerViewSteps" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    style="@style/FloatingActionButton" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
