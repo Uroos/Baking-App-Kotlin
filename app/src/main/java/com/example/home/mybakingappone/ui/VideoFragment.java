@@ -42,7 +42,8 @@ public class VideoFragment extends Fragment {
 
     private static boolean playWhenReady = true;
     private static int currentWindow;
-    protected static long playbackPosition = 0;
+    //protected static long playbackPosition = 0;
+    public static long playbackPosition = 0; //Changed to this for kotlin
 
     private static final String urlToTest = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4";
     private String urlToDisplay;
@@ -196,6 +197,7 @@ public class VideoFragment extends Fragment {
         this.urlToDisplay = urlToDisplay;
     }
 
+    public void setPlaybackPosition ( long i){this.playbackPosition=i;}
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE

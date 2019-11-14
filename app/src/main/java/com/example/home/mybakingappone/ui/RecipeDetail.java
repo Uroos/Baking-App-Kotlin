@@ -90,7 +90,7 @@ public class RecipeDetail extends AppCompatActivity implements RecipeStepFragmen
     public void onStepSelected(String description, String videoUrl) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
-            Intent intent = new Intent(this, RecipeStepDetail.class);
+            Intent intent = new Intent(this, RecipeStepDetail2.class);
             intent.putExtra(getString(R.string.recipe_detail_intent_description), description);
             intent.putExtra(getString(R.string.recipe_detail_intent_url), videoUrl);
             startActivity(intent);
