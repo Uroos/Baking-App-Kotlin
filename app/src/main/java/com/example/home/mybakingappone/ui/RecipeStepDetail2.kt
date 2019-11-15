@@ -8,7 +8,7 @@ import android.view.MenuItem
 import com.example.home.mybakingappone.R
 
 class RecipeStepDetail2 : AppCompatActivity() {
-    var description: String? = null
+    var description: String=""
     var videourl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
                 .commit()
 
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            val recipeStepDescriptionFragment = RecipeStepDescriptionFragment()
+            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
             recipeStepDescriptionFragment.setDescription(description)
             val fragmentManager1 = supportFragmentManager
             fragmentManager1.beginTransaction()

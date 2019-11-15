@@ -43,7 +43,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             fragmentManager.beginTransaction()
                     .add(R.id.video_container, videoFragment)
                     .commit()
-            val recipeStepDescriptionFragment = RecipeStepDescriptionFragment()
+            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
             recipeStepDescriptionFragment.setDescription("")
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
@@ -73,7 +73,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
         super.onSaveInstanceState(outState)
     }
 
-    override fun onStepSelected(description: String?, videoUrl: String?) {
+    override fun onStepSelected(description: String, videoUrl: String?) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
             val intent = Intent(this, RecipeStepDetail2::class.java)
@@ -89,7 +89,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
                     .replace(R.id.video_container, videoFragment)
                     .commit()
 
-            val recipeStepDescriptionFragment = RecipeStepDescriptionFragment()
+            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
             recipeStepDescriptionFragment.setDescription(description)
             fragmentManager.beginTransaction()
                     .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
