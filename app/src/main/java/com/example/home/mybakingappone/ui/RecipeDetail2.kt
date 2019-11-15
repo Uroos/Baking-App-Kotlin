@@ -11,7 +11,7 @@ import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes
 import timber.log.Timber
 
-class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListener {
+class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
     lateinit var recipe: Recipes
     var twoPane: Boolean = false
@@ -31,7 +31,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             if (intent != null) {
                 recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes
             }
-            val recipeStepFragment = RecipeStepFragment()
+            val recipeStepFragment = RecipeStepFragment2()
             recipeStepFragment.setRecipe(recipe)
 
             val fragmentManager = supportFragmentManager
@@ -50,7 +50,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
                     .commit()
         } else {
             twoPane = false
-            val recipeStepFragment = RecipeStepFragment()
+            val recipeStepFragment = RecipeStepFragment2()
             val fragmentManager = supportFragmentManager
             if (savedInstanceState == null) {
                 Timber.v("savedinstance is null")
