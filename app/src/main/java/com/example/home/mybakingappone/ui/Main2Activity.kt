@@ -1,13 +1,12 @@
 package com.example.home.mybakingappone.ui
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes
-import timber.log.Timber
 
-class Main2Activity : AppCompatActivity(), MasterListFragment.OnImageClickListener{
+class Main2Activity : AppCompatActivity(), MasterListFragment.OnImageClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

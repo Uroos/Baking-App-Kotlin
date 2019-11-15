@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 
 import com.example.home.mybakingappone.model.Recipes;
 import com.example.home.mybakingappone.ui.Main2Activity;
-import com.example.home.mybakingappone.ui.RecipeDetail;
+import com.example.home.mybakingappone.ui.RecipeDetail2;
 
 /**
  * Implementation of App Widget functionality.
@@ -35,7 +35,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             stackBuilder.addParentStack(Main2Activity.class);
             stackBuilder.addNextIntent(mainIntent);
 
-            intent = new Intent(context, RecipeDetail.class);
+            intent = new Intent(context, RecipeDetail2.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(context.getString(R.string.main_activity_bundle_recipe), recipe);
             intent.putExtras(bundle);

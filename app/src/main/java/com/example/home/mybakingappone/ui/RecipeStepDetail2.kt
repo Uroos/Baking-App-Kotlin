@@ -9,29 +9,29 @@ import com.example.home.mybakingappone.R
 
 class RecipeStepDetail2 : AppCompatActivity() {
     var description: String? = null
-    var videourl:String?=null
+    var videourl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_step_detail)
 
         //Restore the fragment's instance
-        if(this.intent !=null){
+        if (this.intent != null) {
             description = intent.getStringExtra(getString(R.string.recipe_detail_intent_description))
-            videourl=intent.getStringExtra(getString(R.string.recipe_detail_intent_url))
+            videourl = intent.getStringExtra(getString(R.string.recipe_detail_intent_url))
         }
-        val videoFragment = VideoFragment()
-        videoFragment.setUrlToDisplay(videourl)
-        videoFragment.setPlaybackPosition(0)
+        val videoFragment = VideoFragment2()
+        videoFragment.setUrlToDisplay1(videourl)
+        videoFragment.setPlaybackPosition1(0)
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
                 .add(R.id.video_container, videoFragment)
                 .commit()
 
-        if(this.resources.configuration.orientation==Configuration.ORIENTATION_PORTRAIT){
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             val recipeStepDescriptionFragment = RecipeStepDescriptionFragment()
             recipeStepDescriptionFragment.setDescription(description)
-            val fragmentManager1= supportFragmentManager
+            val fragmentManager1 = supportFragmentManager
             fragmentManager1.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()

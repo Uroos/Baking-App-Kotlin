@@ -61,10 +61,10 @@ public class MainActivityIntentTest {
                                 0)));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        // Checks whether intent is sent to RecipeDetail class
+        // Checks whether intent is sent to RecipeDetail2 class
         // intended is used for intent verification
         // It checks whether the information we meant to send is actually sent
-        intended(hasComponent(RecipeDetail.class.getName()));
+        intended(hasComponent(RecipeDetail2.class.getName()));
 
     }
 

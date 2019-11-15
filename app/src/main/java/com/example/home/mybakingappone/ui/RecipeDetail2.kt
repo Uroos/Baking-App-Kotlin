@@ -1,16 +1,11 @@
 package com.example.home.mybakingappone.ui
 
-import android.app.Activity
-import android.app.FragmentManager
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.annotation.IdRes
 import android.support.v4.app.NavUtils
 import android.support.v4.app.TaskStackBuilder
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import android.widget.LinearLayout
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes
@@ -18,8 +13,8 @@ import timber.log.Timber
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListener {
 
-    lateinit var  recipe :Recipes
-     var twoPane:Boolean = false
+    lateinit var recipe: Recipes
+    var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +22,14 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
 
         this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val linearLayoutCheck:LinearLayout? = findViewById(R.id.video_description_linear_layout)
+        val linearLayoutCheck: LinearLayout? = findViewById(R.id.video_description_linear_layout)
         // Tablet is connected
-        if(linearLayoutCheck!=null){
-       // val linearLayoutCheck = null
-        //if(linearLayoutCheck!=null){
-            twoPane=true
-            if(intent!=null){
-                 recipe= intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes
+        if (linearLayoutCheck != null) {
+            // val linearLayoutCheck = null
+            //if(linearLayoutCheck!=null){
+            twoPane = true
+            if (intent != null) {
+                recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes
             }
             val recipeStepFragment = RecipeStepFragment()
             recipeStepFragment.setRecipe(recipe)
@@ -43,8 +38,8 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             fragmentManager.beginTransaction()
                     .add(R.id.recipe_steps_container, recipeStepFragment)
                     .commit()
-            val videoFragment = VideoFragment()
-            videoFragment.setUrlToDisplay("")
+            val videoFragment = VideoFragment2()
+            videoFragment.setUrlToDisplay1("")
             fragmentManager.beginTransaction()
                     .add(R.id.video_container, videoFragment)
                     .commit()
@@ -53,7 +48,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
-        }else{
+        } else {
             twoPane = false
             val recipeStepFragment = RecipeStepFragment()
             val fragmentManager = supportFragmentManager
@@ -72,10 +67,6 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             }
         }
     }
-//    fun <T : View> Activity.bind(@IdRes res : Int) : T? {
-//        @Suppress("UNCHECKED_CAST")
-//        return findViewById(res) as T
-//    }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         Timber.v("saving recipe before exiting")
@@ -91,9 +82,9 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
             startActivity(intent)
         } else {
             val fragmentManager = supportFragmentManager
-            val videoFragment =  VideoFragment()
+            val videoFragment = VideoFragment2()
 
-            videoFragment.setUrlToDisplay(videoUrl)
+            videoFragment.setUrlToDisplay1(videoUrl)
             fragmentManager.beginTransaction()
                     .replace(R.id.video_container, videoFragment)
                     .commit()
@@ -110,7 +101,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
 
         when (item!!.itemId) {
             // Respond to the action bar's Up/Home button
-            android.R.id.home-> {
+            android.R.id.home -> {
                 val upIntent = Intent(this, RecipeDetail2::class.java)
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     // This activity is not part of the application's task, so
@@ -118,7 +109,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment.OnStepClickListene
                     // with a synthesized back stack.
                     TaskStackBuilder
                             .create(this)
-                            .addNextIntent( Intent (this, Main2Activity::class.java))
+                            .addNextIntent(Intent(this, Main2Activity::class.java))
                             .addNextIntent(upIntent).startActivities()
                     finish();
                 } else {
