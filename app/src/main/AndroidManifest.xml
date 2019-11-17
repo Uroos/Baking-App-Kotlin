@@ -21,15 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.RecipeDetail2"
+        <activity
+            android:name=".ui.RecipeDetail2"
             android:label="Details"
-            android:launchMode="singleTop"/>
-
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.RecipeStepDetail2"
             android:label="Recipe Steps"
             android:parentActivityName=".ui.RecipeDetail2" />
+
+        <service android:name=".RecipeUpdateService" />
 
         <receiver android:name=".RecipeWidgetProvider">
             <intent-filter>

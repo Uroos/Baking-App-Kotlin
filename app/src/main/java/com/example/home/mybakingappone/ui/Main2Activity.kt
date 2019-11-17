@@ -18,8 +18,6 @@ class Main2Activity : AppCompatActivity(), MasterListFragment.OnImageClickListen
         var bundle = Bundle()
         bundle.putSerializable(getString(R.string.main_activity_bundle_recipe), recipe)
         intent.putExtras(bundle)
-        //intent.putExtras(Bundle().putSerializable(getString(R.string.main_activity_bundle_recipe), recipe))
-        //intent.putExtra("name", bundle)
         startActivity(intent)
 
     }

@@ -21,9 +21,7 @@ class RecipesStepDescriptionFragment2 : Fragment() {
     object Position {
         @JvmStatic var description=""
     }
-    
-    fun RecipeStepDescriptionFragment2() {
-    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_recipe_step_description, container, false)

@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.example.home.mybakingappone.R;
 import com.example.home.mybakingappone.SimpleIdlingResource;
 import com.example.home.mybakingappone.model.Recipes;
-import com.example.home.mybakingappone.utils.Constants;
+import com.example.home.mybakingappone.onlinecheck.GeneralUrls;
 import com.example.home.mybakingappone.utils.OkHttpHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,11 +37,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import kotlin.jvm.JvmStatic;
 import timber.log.Timber;
-
-import static com.example.home.mybakingappone.utils.Constants.BUNDLE_RECYCLER_LAYOUT;
-import static com.example.home.mybakingappone.utils.Constants.RECIPES_URL;
-import static com.example.home.mybakingappone.utils.Constants.isOnline;
+import static com.example.home.mybakingappone.onlinecheck.IsOnlineKt.isOnline;
 
 public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpdateListener, MasterListAdapter.RecipeListAdapterOnClickHandler {
 
@@ -64,6 +62,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
 
     private Parcelable savedRecyclerLayoutState;
     private Bundle bundleRecyclerViewState;
+
 
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
     OnImageClickListener recipeClickCallback;
@@ -140,9 +139,9 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
             layoutManager = new GridLayoutManager(context, 4);
 
         } else {
-            if(configuration.orientation==Configuration.ORIENTATION_PORTRAIT) {
+            if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 layoutManager = new GridLayoutManager(context, 1);
-            }else if(configuration.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 layoutManager = new GridLayoutManager(context, 2);
 
             }
@@ -158,7 +157,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
         if (savedInstanceState != null) {
             loadingIndicator.setVisibility(View.INVISIBLE);
             //recipes = (List) savedInstanceState.getSerializable("recipes");
-            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(GeneralUrls.getBUNDLE_RECYCLER_LAYOUT());
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
 
@@ -189,7 +188,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
         if (isOnline(context)) {
             recyclerView.setVisibility(View.INVISIBLE);
             //Toast.makeText(context, "is online", Toast.LENGTH_SHORT).show();
-            task.execute(RECIPES_URL);
+            task.execute(GeneralUrls.getRECIPES_URL());
         } else {
             showErrorMessage();
         }
@@ -239,7 +238,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
         super.onSaveInstanceState(outState);
         outState.putSerializable("recipes", (Serializable) recipes);
         if (isOnline(context)) {
-            outState.putParcelable(Constants.BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+            outState.putParcelable(GeneralUrls.getBUNDLE_RECYCLER_LAYOUT(), recyclerView.getLayoutManager().onSaveInstanceState());
         } else {
             showErrorMessage();
         }
@@ -250,7 +249,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
         super.onActivityCreated(savedInstanceState);
         if (isOnline(context)) {
             if (savedInstanceState != null) {
-                savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+                savedRecyclerLayoutState = savedInstanceState.getParcelable(GeneralUrls.getBUNDLE_RECYCLER_LAYOUT());
                 recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
             }
         } else {
