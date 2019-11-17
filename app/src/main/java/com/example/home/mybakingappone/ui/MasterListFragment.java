@@ -25,7 +25,7 @@ import com.example.home.mybakingappone.R;
 import com.example.home.mybakingappone.SimpleIdlingResource;
 import com.example.home.mybakingappone.model.Recipes;
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls;
-import com.example.home.mybakingappone.utils.OkHttpHandler;
+import com.example.home.mybakingappone.utils.OkHttpHandler2;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,9 +41,9 @@ import kotlin.jvm.JvmStatic;
 import timber.log.Timber;
 import static com.example.home.mybakingappone.onlinecheck.IsOnlineKt.isOnline;
 
-public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpdateListener, MasterListAdapter.RecipeListAdapterOnClickHandler {
+public class MasterListFragment extends Fragment implements OkHttpHandler2.OnUpdateListener, MasterListAdapter.RecipeListAdapterOnClickHandler {
 
-    private OkHttpHandler task;
+    private OkHttpHandler2 task;
     private Unbinder unbinder;
     private Context context;
     private IntentFilter onLineIntentFilter;
@@ -130,7 +130,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
         loadingIndicator.setVisibility(View.VISIBLE);
         getIdlingResource();
 
-        task = new OkHttpHandler();
+        task = new OkHttpHandler2();
         task.setUpdateListener(this, mIdlingResource);
 
         Configuration configuration = getResources().getConfiguration();
@@ -183,7 +183,7 @@ public class MasterListFragment extends Fragment implements OkHttpHandler.OnUpda
     }
 
     private void setupData() {
-        task = new OkHttpHandler();
+        task = new OkHttpHandler2();
         task.setUpdateListener(this, mIdlingResource);
         if (isOnline(context)) {
             recyclerView.setVisibility(View.INVISIBLE);
