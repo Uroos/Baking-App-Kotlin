@@ -72,11 +72,6 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         fun onStepSelected(description: String, videoUrl: String?)
     }
 
-//    //Empty constructor is necessary for instantiating the fragment
-//    fun RecipeStepFragment2() {
-//
-//    }
-
     // Override onAttach to make sure that the container activity has implemented the callback
     override fun onAttach(@NonNull context1: Context) {
         super.onAttach(context1)
