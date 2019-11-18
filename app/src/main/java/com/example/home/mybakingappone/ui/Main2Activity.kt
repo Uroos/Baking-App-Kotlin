@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes
 
-class Main2Activity : AppCompatActivity(), MasterListFragment.OnImageClickListener {
+class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
     }
 
     override fun onImageSelected(recipe: Recipes?) {

@@ -10,19 +10,19 @@ import okhttp3.Response
 class OkHttpHandler2: AsyncTask<String, Void, String>() {
 
     lateinit var listener:OnUpdateListener
-     lateinit var idlingResource: SimpleIdlingResource
+      var idlingResource: SimpleIdlingResource?=null
 
     interface OnUpdateListener {
         fun onUpdate(s:String?)
     }
 
-    fun setUpdateListener( listener:OnUpdateListener, @Nullable idlingResource:SimpleIdlingResource) {
+    fun setUpdateListener( listener:OnUpdateListener, @Nullable idlingResource:SimpleIdlingResource?) {
         this.idlingResource=idlingResource
         this.listener = listener
     }
     override fun doInBackground(vararg s: String?): String? {
         if (idlingResource != null) {
-            idlingResource.setIdleState(false);
+            idlingResource!!.setIdleState(false);
         }
         var client: OkHttpClient = OkHttpClient()
         var response:Response
@@ -42,7 +42,7 @@ class OkHttpHandler2: AsyncTask<String, Void, String>() {
         super.onPostExecute(s)
         if (listener != null) {
             if (idlingResource != null) {
-                idlingResource.setIdleState(true)
+                idlingResource!!.setIdleState(true)
             }
             listener.onUpdate(s)
         }
