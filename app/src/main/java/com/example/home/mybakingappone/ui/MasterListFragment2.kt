@@ -24,12 +24,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource
-import com.example.home.mybakingappone.model.Recipes
+import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_LAYOUT
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.RECIPES_URL
 import com.example.home.mybakingappone.onlinecheck.isOnline
 import com.example.home.mybakingappone.utils.OkHttpHandler2
 import com.example.home.mybakingappone.utils.parseRecipeJson
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import timber.log.Timber
 import java.io.Serializable
 
@@ -44,7 +46,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
     private var onLineIntentFilter: IntentFilter? = null
     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
 
-    private var recipes: ArrayList<Recipes>? = ArrayList()
+    private var recipes: ArrayList<Recipes2>? = ArrayList()
     private var recipeAdapter: MasterListAdapter?=null
     private var layoutManager: GridLayoutManager? = null
 
@@ -72,14 +74,13 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
         return mIdlingResource!! //as IdlingResource
     }
 
-    override fun onRecipeClick(recipe: Recipes) {
-        // after click it will call implemented onImageSelected in MainActivity
+    override fun onRecipeClick(recipe: Recipes2) {
         recipeClickCallback.onImageSelected(recipe)
     }
 
     // OnImageClickListener interface, calls a method in the Main activity named onImageSelected
     interface OnImageClickListener {
-        fun onImageSelected(recipe: Recipes?)
+        fun onImageSelected(recipe: Recipes2?)
     }
 
     // Override onAttach to make sure that the container activity has implemented the callback
@@ -173,7 +174,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
         if (isOnline(context2)) {
             recyclerView.setVisibility(View.INVISIBLE)
             //Toast.makeText(context, "is online", Toast.LENGTH_SHORT).show();
-            task!!.execute(RECIPES_URL)
+            task.execute(RECIPES_URL)
         } else {
             showErrorMessage()
         }
@@ -182,16 +183,15 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
 
     override fun onUpdate(response: String?) {
         if (response != null) {
-            //recipes = parseRecipeJson(getActivity(), response);
-            recipes=parseRecipeJson(context2,response)
-//            var gson = Gson()
-//            var listType = TypeToken<ArrayList<Recipes>>{}.type
-//            recipes = gson.fromJson(response, listType);
+           // recipes=parseRecipeJson(context2,response)
+           var gson = Gson()
+            val itemType = object : TypeToken<ArrayList<Recipes2>>() {}.type
+            recipes = gson.fromJson<ArrayList<Recipes2>>(response,itemType)
 
-            recipes!!.get(0).setImage((R.drawable.nutella_pie).toString())
-            recipes!!.get(1).setImage((R.drawable.brownies).toString())
-            recipes!!.get(2).setImage((R.drawable.yellow_cake).toString())
-            recipes!!.get(3).setImage((R.drawable.cheese_cake).toString())
+            recipes!!.get(0).image=R.drawable.nutella_pie.toString()
+            recipes!!.get(1).image=R.drawable.brownies.toString()
+            recipes!!.get(2).image=R.drawable.yellow_cake.toString()
+            recipes!!.get(3).image=R.drawable.cheese_cake.toString()
 
             recipeAdapter!!.setRecipeData((recipes))
             recipeAdapter!!.notifyDataSetChanged()
@@ -199,7 +199,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
 
             showRecipeData()
-
         } else {
             showErrorMessage()
         }

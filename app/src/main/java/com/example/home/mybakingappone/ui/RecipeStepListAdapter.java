@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.home.mybakingappone.R;
-import com.example.home.mybakingappone.model.Steps;
+import com.example.home.mybakingappone.model.Steps2;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ public class RecipeStepListAdapter extends RecyclerView.Adapter<RecipeStepListAd
 
     // Keeps track of the context and list of images to display
     private Context context;
-    private List<Steps> steps;
+    private List<Steps2> steps;
     private final RecipeStepListAdapter.RecipeStepListAdapterOnClickHandler clickHandler;
 
     // The interface that receives onClick messages
     public interface RecipeStepListAdapterOnClickHandler {
-        void onStepClick(Steps step);
+        void onStepClick(Steps2 step);
     }
 
     /**
@@ -71,7 +71,7 @@ public class RecipeStepListAdapter extends RecyclerView.Adapter<RecipeStepListAd
             itemView.setOnClickListener(this);
         }
 
-        public void setData(Steps steps) {
+        public void setData(Steps2 steps) {
             recipeText.setText(steps.getShortDescription());
         }
 

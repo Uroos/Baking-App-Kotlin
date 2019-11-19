@@ -7,13 +7,14 @@ import android.support.v4.app.TaskStackBuilder
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.model.Recipes
+import com.example.home.mybakingappone.model.Recipes2
 import timber.log.Timber
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
-    lateinit var recipe: Recipes
+    lateinit var recipe: Recipes2
     var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +26,11 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         val linearLayoutCheck: LinearLayout? = findViewById(R.id.video_description_linear_layout)
         // Tablet is connected
         if (linearLayoutCheck != null) {
-            // val linearLayoutCheck = null
-            //if(linearLayoutCheck!=null){
             twoPane = true
             if (intent != null) {
-                recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes
+                recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes2
+                //recipe=intent.extras.getBundle(getString(R.string.main_activity_bundle_recipe)) as Recipes2
+                Toast.makeText(this,"recipe number is="+recipe!!.name,Toast.LENGTH_SHORT).show()
             }
             val recipeStepFragment = RecipeStepFragment2()
             recipeStepFragment.setRecipe(recipe)
@@ -56,7 +57,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                 Timber.v("savedinstance is null")
                 if (intent != null) {
                     //After click in main activity, it sends a recipe object in intent.
-                    recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes
+                    recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                     recipeStepFragment.setRecipe(recipe)
                     fragmentManager.beginTransaction()
                             .add(R.id.recipe_steps_container, recipeStepFragment)

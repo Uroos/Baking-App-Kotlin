@@ -14,10 +14,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.RecipeUpdateService
-import com.example.home.mybakingappone.model.Ingredients
-import com.example.home.mybakingappone.model.Recipes
-import com.example.home.mybakingappone.model.Steps
+//import com.example.home.mybakingappone.RecipeUpdateService
+import com.example.home.mybakingappone.model.Ingredients2
+import com.example.home.mybakingappone.model.Recipes2
+import com.example.home.mybakingappone.model.Steps2
 import com.example.home.mybakingappone.ui.RecipeStepFragment2.RecipeClass.recipe
 import timber.log.Timber
 
@@ -40,20 +40,20 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
 
     var ingredients: String = ""
 
-    private var steps: List<Steps> = ArrayList()
-    private var ingredientsList: ArrayList<Ingredients> = ArrayList()
+    private var steps: List<Steps2> = ArrayList()
+    private var ingredientsList: ArrayList<Ingredients2> = ArrayList()
     private var recipeStepListAdapter: RecipeStepListAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
 
     object RecipeClass {
         @JvmStatic
-        var recipe: Recipes? = null
+        var recipe: Recipes2? = null
     }
 
     // Method in interface to handle recycler view clicks
-    override fun onStepClick(step: Steps) {
-        var tempVideoUrl = step.getVideoURL()
-        var tempThumbNailUrl = step.getThumbnailURL()
+    override fun onStepClick(step: Steps2) {
+        var tempVideoUrl = step.videoURL
+        var tempThumbNailUrl = step.thumbnailURL
         var urlToSend: String? = ""
         if (tempVideoUrl == null || TextUtils.isEmpty(tempVideoUrl)) {
             if (tempThumbNailUrl == null || TextUtils.isEmpty(tempThumbNailUrl)) {
@@ -64,7 +64,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         } else {
             urlToSend = tempVideoUrl;
         }
-        callback.onStepSelected(step.getDescription(), urlToSend);
+        callback.onStepSelected(step.description, urlToSend);
     }
 
     // OnImageClickListener interface, calls a method in the host activity named onImageSelected
@@ -94,14 +94,14 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         // Inflate the RecipeStepFragment layout
         if (savedInstanceState == null) {
             Timber.v("savedinstancestate is null. trying to get stored recipe")
-            steps = recipe!!.getSteps()
-            ingredientsList = recipe!!.getIngredients()
+            steps = recipe!!.steps
+            ingredientsList = recipe!!.ingredients
         } else {
-            recipe = savedInstanceState.getSerializable("recipe") as Recipes
-            steps = recipe!!.getSteps()
-            ingredientsList = recipe!!.getIngredients()
+            recipe = savedInstanceState.getSerializable("recipe") as Recipes2
+            steps = recipe!!.steps
+            ingredientsList = recipe!!.ingredients
         }
-        textViewRecipeName.setText(recipe!!.getName())
+        textViewRecipeName.setText(recipe!!.name)
         ingredients = arrangeIngredientList(ingredientsList)
         textViewIngredients.setText(ingredients)
 
@@ -112,12 +112,12 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         recyclerViewSteps.setAdapter(recipeStepListAdapter)
 
         fab.setOnClickListener() {
-            RecipeUpdateService.startRecipeUpdate(context, ingredients, recipe)
+           // RecipeUpdateService.startRecipeUpdate(context, ingredients, recipe)
         }
         return rootView;
     }
 
-    fun arrangeIngredientList(ingredientsList: ArrayList<Ingredients>): String {
+    fun arrangeIngredientList(ingredientsList: ArrayList<Ingredients2>): String {
         var stringBuilder = StringBuilder()
         var result = ""
         for (i in 0 until ingredientsList.size) {
@@ -145,7 +145,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         //outState.putParcelable(BUNDLE_STEPS_RECYCLER_LAYOUT, recyclerViewSteps.getLayoutManager().onSaveInstanceState());
     }
 
-    fun setRecipe(recipe: Recipes) {
+    fun setRecipe(recipe: Recipes2) {
         RecipeClass.recipe = recipe
     }
 

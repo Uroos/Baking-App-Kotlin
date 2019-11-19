@@ -1,4 +1,7 @@
 package com.example.home.mybakingappone.model
 
-class Ingredients2 {
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Ingredients2 ( val quantity:Double,val measure:String,val ingredient:String){
 }

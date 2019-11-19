@@ -10,22 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.home.mybakingappone.R;
-import com.example.home.mybakingappone.model.Recipes;
+//import com.example.home.mybakingappone.model.Recipes;
+import com.example.home.mybakingappone.model.Recipes2;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+//Notes
+//Changed all Recipes instances to Recipes2 for kotlin interfacing
 // Custom adapter class that displays a list of Android-Me images in a GridView
 public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.recipeViewHolder> {
 
     // Keeps track of the context and list of images to display
     private Context context;
-    private List<Recipes> recipes;
+    private List<Recipes2> recipes;
     private final RecipeListAdapterOnClickHandler clickHandler;
 
     // The interface that receives onClick messages
     public interface RecipeListAdapterOnClickHandler {
-        void onRecipeClick(Recipes recipe);
+        void onRecipeClick(Recipes2 recipe);
     }
 
     /**
@@ -75,7 +77,7 @@ public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.re
             itemView.setOnClickListener(this);
         }
 
-        public void setData(Recipes recipe) {
+        public void setData(Recipes2 recipe) {
             Picasso.with(context).load(Integer.parseInt(recipe.getImage())).error(R.mipmap.ic_launcher).into(recipeImage);
             recipeText.setText(recipe.getName());
         }
