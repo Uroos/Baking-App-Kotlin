@@ -8,9 +8,7 @@ import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
-import android.provider.SyncStateContract
 import android.support.annotation.NonNull
-import android.support.annotation.Nullable
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
 import android.support.v4.app.Fragment
@@ -22,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource
 import com.example.home.mybakingappone.model.Recipes2
@@ -29,7 +28,6 @@ import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_L
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.RECIPES_URL
 import com.example.home.mybakingappone.onlinecheck.isOnline
 import com.example.home.mybakingappone.utils.OkHttpHandler2
-import com.example.home.mybakingappone.utils.parseRecipeJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
@@ -38,16 +36,16 @@ import java.io.Serializable
 /**
  * A simple [Fragment] subclass.
  */
-class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterListAdapter.RecipeListAdapterOnClickHandler {
+class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterListAdapter2.RecipeListAdapterOnClickHandler {
 
     private lateinit var task: OkHttpHandler2
-    private lateinit var context2:Context
+    private lateinit var context2: Context
 
     private var onLineIntentFilter: IntentFilter? = null
     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
 
     private var recipes: ArrayList<Recipes2>? = ArrayList()
-    private var recipeAdapter: MasterListAdapter?=null
+    private var recipeAdapter: MasterListAdapter2? = null
     private var layoutManager: GridLayoutManager? = null
 
     private var savedRecyclerLayoutState: Parcelable? = null
@@ -60,7 +58,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
     private lateinit var recipeClickCallback: OnImageClickListener
     // The Idling Resource which will be null in production.
-    private var  mIdlingResource: SimpleIdlingResource?=null
+    private var mIdlingResource: SimpleIdlingResource? = null
 
     /**
      * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
@@ -75,7 +73,9 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
     }
 
     override fun onRecipeClick(recipe: Recipes2) {
-        recipeClickCallback.onImageSelected(recipe)
+        recipeClickCallback.onImageSelected(recipe)//Calls the function in Main2Activity
+        //Toast.makeText(context,"first ingredient is="+recipe.name, Toast.LENGTH_SHORT).show()
+
     }
 
     // OnImageClickListener interface, calls a method in the Main activity named onImageSelected
@@ -104,7 +104,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
         Timber.plant(Timber.DebugTree())
 
         // gotten from raywenderlick fragment tutorial with dogs list
-         val activity=activity as Context
+        val activity = activity as Context
 
         recyclerView = rootView.findViewById(R.id.rv_recipes)
         errorMessageDisplay = rootView.findViewById(R.id.tv_error_message_display)
@@ -114,7 +114,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
         getIdlingResource()
 
         task = OkHttpHandler2()
-        task.setUpdateListener(this,mIdlingResource)
+        task.setUpdateListener(this, mIdlingResource)//this means this fragment is the context
 
         var configuration = resources.configuration
         // Toast.makeText(context, "Smalled screen width is" + configuration.smallestScreenWidthDp, Toast.LENGTH_LONG).show();
@@ -134,10 +134,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
         recipes = ArrayList()
         recyclerView.setLayoutManager(layoutManager)
         recyclerView.setHasFixedSize(true)
-        // gotten from raywenderlick fragment tutorial with dogs list
-        recipeAdapter = MasterListAdapter(activity, recipes, this)
-
-//        recipeAdapter = MasterListAdapter(context2, recipes, this)
+        recipeAdapter = MasterListAdapter2(activity, recipes!!, this) // gotten from raywenderlick fragment tutorial with dogs list
         recyclerView.setAdapter(recipeAdapter)
 
         if (savedInstanceState != null) {
@@ -156,7 +153,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
 
     override fun onResume() {
         super.onResume()
-        //changed from this.context!!
         LocalBroadcastManager.getInstance(this.context2)
                 .registerReceiver(onLineBroadCastReceiver, onLineIntentFilter!!)
     }
@@ -170,7 +166,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
     fun setupData() {
         task = OkHttpHandler2()
         //        task.setUpdateListener(this, mIdlingResource);
-        task.setUpdateListener(this,mIdlingResource)
+        task.setUpdateListener(this, mIdlingResource)
         if (isOnline(context2)) {
             recyclerView.setVisibility(View.INVISIBLE)
             //Toast.makeText(context, "is online", Toast.LENGTH_SHORT).show();
@@ -183,17 +179,19 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener,MasterLi
 
     override fun onUpdate(response: String?) {
         if (response != null) {
-           // recipes=parseRecipeJson(context2,response)
-           var gson = Gson()
+            // recipes=parseRecipeJson(context2,response)
+
+            //https://stackoverflow.com/questions/51376954/how-to-use-gson-deserialize-to-arraylist-in-kotlin
+            var gson = Gson()
             val itemType = object : TypeToken<ArrayList<Recipes2>>() {}.type
-            recipes = gson.fromJson<ArrayList<Recipes2>>(response,itemType)
+            recipes = gson.fromJson<ArrayList<Recipes2>>(response, itemType)
 
-            recipes!!.get(0).image=R.drawable.nutella_pie.toString()
-            recipes!!.get(1).image=R.drawable.brownies.toString()
-            recipes!!.get(2).image=R.drawable.yellow_cake.toString()
-            recipes!!.get(3).image=R.drawable.cheese_cake.toString()
+            recipes!!.get(0).image = R.drawable.nutella_pie.toString()
+            recipes!!.get(1).image = R.drawable.brownies.toString()
+            recipes!!.get(2).image = R.drawable.yellow_cake.toString()
+            recipes!!.get(3).image = R.drawable.cheese_cake.toString()
 
-            recipeAdapter!!.setRecipeData((recipes))
+            recipeAdapter!!.setRecipeData((recipes!!))
             recipeAdapter!!.notifyDataSetChanged()
             recyclerView.setAdapter(recipeAdapter)
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
