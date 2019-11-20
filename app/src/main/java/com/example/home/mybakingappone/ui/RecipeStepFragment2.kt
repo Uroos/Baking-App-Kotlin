@@ -19,12 +19,13 @@ import com.example.home.mybakingappone.model.Ingredients2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.example.home.mybakingappone.ui.RecipeStepFragment2.RecipeClass.recipe
+import kotlinx.serialization.Serializable
 import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
  */
-class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdapterOnClickHandler {
+class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAdapterOnClickHandler {
 
     //@BindView(R.id.tv_recipe_name)
     lateinit var textViewRecipeName: TextView
@@ -42,7 +43,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
 
     private var steps: List<Steps2> = ArrayList()
     private var ingredientsList: ArrayList<Ingredients2> = ArrayList()
-    private var recipeStepListAdapter: RecipeStepListAdapter? = null
+    private var recipeStepListAdapter: RecipeStepListAdapter2? = null
     private var linearLayoutManager: LinearLayoutManager? = null
 
     object RecipeClass {
@@ -86,6 +87,8 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false)
+        val activity = activity as Context
+
         textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
         recyclerViewSteps = rootView.findViewById(R.id.rv_recipe_step)
         textViewIngredients = rootView.findViewById(R.id.tv_ingredients)
@@ -108,7 +111,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerViewSteps.setLayoutManager(linearLayoutManager)
         recyclerViewSteps.setHasFixedSize(true)
-        recipeStepListAdapter = RecipeStepListAdapter(context, steps, this)
+        recipeStepListAdapter = RecipeStepListAdapter2(activity, steps, this)//added !!
         recyclerViewSteps.setAdapter(recipeStepListAdapter)
 
         fab.setOnClickListener() {
@@ -139,7 +142,6 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter.RecipeStepListAdap
 
     override fun onSaveInstanceState(@NonNull outState: Bundle) {
         super.onSaveInstanceState(outState)
-        //This might give problem as initially recipe was serialized to save to outState
         outState.putSerializable("recipe", recipe)
         outState.putString("ingredients", ingredients)
         //outState.putParcelable(BUNDLE_STEPS_RECYCLER_LAYOUT, recyclerViewSteps.getLayoutManager().onSaveInstanceState());

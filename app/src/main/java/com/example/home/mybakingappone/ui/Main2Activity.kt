@@ -16,12 +16,12 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
     }
 
     override fun onImageSelected(recipe: Recipes2?) {
-//        val intent = Intent(this, RecipeDetail2::class.java)
-//        var bundle = Bundle()
-//        bundle.putSerializable(getString(R.string.main_activity_bundle_recipe), recipe ) as Serializable
-//        intent.putExtra("Bundle",bundle)
-        //startActivity(intent)
-        Toast.makeText(this,"recipe is="+recipe!!.name,Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, RecipeDetail2::class.java)
+        var bundle = Bundle()
+        bundle.putSerializable(getString(R.string.main_activity_bundle_recipe), recipe  )
+        intent.putExtra("Bundle",bundle)
+      startActivity(intent)
+        //Toast.makeText(this,"recipe is="+recipe!!.name,Toast.LENGTH_SHORT).show()
 
     }
 }
