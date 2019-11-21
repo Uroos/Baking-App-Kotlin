@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Steps2
 
-class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.recipeStepViewHolder> (){
+class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.recipeStepViewHolder>() {
 
     private lateinit var context: Context
     private lateinit var steps: List<Steps2>
@@ -36,7 +36,7 @@ class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.rec
 
     override fun onBindViewHolder(holder: RecipeStepListAdapter2.recipeStepViewHolder, position: Int) {
         holder.recipeText.setText(steps.get(position).shortDescription)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             clickHandler.onStepClick(steps.get(position))
         }
     }

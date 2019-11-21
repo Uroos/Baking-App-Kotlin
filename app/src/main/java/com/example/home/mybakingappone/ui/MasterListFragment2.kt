@@ -20,9 +20,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.SimpleIdlingResource
+import com.example.home.mybakingappone.SimpleIdlingResource2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_LAYOUT
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.RECIPES_URL
@@ -58,7 +57,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
     private lateinit var recipeClickCallback: OnImageClickListener
     // The Idling Resource which will be null in production.
-    private var mIdlingResource: SimpleIdlingResource? = null
+    private var mIdlingResource: SimpleIdlingResource2? = null
 
     /**
      * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
@@ -67,7 +66,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     @NonNull
     fun getIdlingResource(): IdlingResource {
         if (mIdlingResource == null) {
-            mIdlingResource = SimpleIdlingResource()
+            mIdlingResource = SimpleIdlingResource2()
         }
         return mIdlingResource!! //as IdlingResource
     }
@@ -177,14 +176,12 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
     }
 
-    override fun onUpdate(response: String?) {
-        if (response != null) {
-            // recipes=parseRecipeJson(context2,response)
-
+    override fun onUpdate(s: String?) {
+        if (s != null) {
             //https://stackoverflow.com/questions/51376954/how-to-use-gson-deserialize-to-arraylist-in-kotlin
             var gson = Gson()
             val itemType = object : TypeToken<ArrayList<Recipes2>>() {}.type
-            recipes = gson.fromJson<ArrayList<Recipes2>>(response, itemType)
+            recipes = gson.fromJson<ArrayList<Recipes2>>(s, itemType)
 
             recipes!!.get(0).image = R.drawable.nutella_pie.toString()
             recipes!!.get(1).image = R.drawable.brownies.toString()

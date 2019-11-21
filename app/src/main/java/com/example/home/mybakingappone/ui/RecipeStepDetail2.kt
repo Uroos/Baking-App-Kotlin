@@ -8,7 +8,7 @@ import android.view.MenuItem
 import com.example.home.mybakingappone.R
 
 class RecipeStepDetail2 : AppCompatActivity() {
-    var description: String=""
+    var description: String = ""
     var videourl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,6 @@ class RecipeStepDetail2 : AppCompatActivity() {
             fragmentManager1.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
-
         }
     }
 
@@ -44,9 +43,5 @@ class RecipeStepDetail2 : AppCompatActivity() {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
     }
 }

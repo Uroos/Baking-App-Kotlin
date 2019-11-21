@@ -30,9 +30,9 @@
             android:label="Recipe Steps"
             android:parentActivityName=".ui.RecipeDetail2" />
 
-        <service android:name=".RecipeUpdateService" />
+        <service android:name=".RecipeUpdateService2" />
 
-        <receiver android:name=".RecipeWidgetProvider">
+        <receiver android:name=".RecipeWidgetProvider2">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -42,10 +42,6 @@
                 android:resource="@xml/recipe_widget_provider_info" />
         </receiver>
 
-        <service
-            android:name=".GridWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service android:name=".RecipeUpdateService" />
     </application>
 
 </manifest>

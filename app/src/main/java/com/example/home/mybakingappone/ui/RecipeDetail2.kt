@@ -14,8 +14,7 @@ import timber.log.Timber
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
-    //lateinit var recipe:Recipes2
-    var recipe: Recipes2?=null
+    var recipe: Recipes2? = null
     var twoPane: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +28,9 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         if (linearLayoutCheck != null) {
             twoPane = true
             if (intent != null) {
-                //recipe = intent.getSerializableExtra(getString(R.string.main_activity_bundle_recipe)) as Recipes2
-                //recipe=intent.extras.getBundle(getString(R.string.main_activity_bundle_recipe)) as Recipes2
-                var args:Bundle = intent.getBundleExtra("Bundle")
-                var recipe:Recipes2 = args.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
-                Toast.makeText(this,"recipe number is="+recipe!!.name,Toast.LENGTH_SHORT).show()
+                var bundle: Bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
+                 recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
+               // Toast.makeText(this, "recipe number is=" + recipe!!.name, Toast.LENGTH_SHORT).show()
             }
             val recipeStepFragment = RecipeStepFragment2()
             recipeStepFragment.setRecipe(recipe!!)
@@ -60,17 +57,17 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                 Timber.v("savedinstance is null")
                 if (intent != null) {
                     //After click in main activity, it sends a recipe object in intent.
-                    if(intent.hasExtra("Bundle")) {
-                        var bundle = intent.getBundleExtra("Bundle")
-                        recipe=bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
+                    if (intent.hasExtra(getString(R.string.intent_extra_bundle))) {
+                        var bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
+                        recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                         recipeStepFragment.setRecipe(recipe!!)
                         fragmentManager.beginTransaction()
                                 .add(R.id.recipe_steps_container, recipeStepFragment)
                                 .commit()
-                        Toast.makeText(this,"Recipe has extra: "+recipe!!.name,Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Recipe has extra: " + recipe!!.name, Toast.LENGTH_SHORT).show()
 
-                    }else{
-                        Toast.makeText(this,"Recipe has no extra",Toast.LENGTH_SHORT).show()
+                    } else {
+                        //Toast.makeText(this, "Recipe has no extra", Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 } else {

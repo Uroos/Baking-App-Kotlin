@@ -2,7 +2,7 @@ package com.example.home.mybakingappone.utils
 
 import android.os.AsyncTask
 import android.support.annotation.Nullable
-import com.example.home.mybakingappone.SimpleIdlingResource
+import com.example.home.mybakingappone.SimpleIdlingResource2
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -10,13 +10,13 @@ import okhttp3.Response
 class OkHttpHandler2: AsyncTask<String, Void, String>() {
 
     lateinit var listener:OnUpdateListener
-      var idlingResource: SimpleIdlingResource?=null
+      var idlingResource: SimpleIdlingResource2?=null
 
     interface OnUpdateListener {
         fun onUpdate(s:String?)
     }
 
-    fun setUpdateListener( listener:OnUpdateListener, @Nullable idlingResource:SimpleIdlingResource?) {
+    fun setUpdateListener( listener:OnUpdateListener, @Nullable idlingResource:SimpleIdlingResource2?) {
         this.idlingResource=idlingResource
         this.listener = listener
     }

@@ -1,6 +1,7 @@
 package com.example.home.mybakingappone.ui
 
 
+//import com.example.home.mybakingappone.RecipeUpdateService
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.NonNull
@@ -14,12 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.home.mybakingappone.R
-//import com.example.home.mybakingappone.RecipeUpdateService
+import com.example.home.mybakingappone.RecipeUpdateService2
 import com.example.home.mybakingappone.model.Ingredients2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.example.home.mybakingappone.ui.RecipeStepFragment2.RecipeClass.recipe
-import kotlinx.serialization.Serializable
 import timber.log.Timber
 
 /**
@@ -55,7 +55,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
     override fun onStepClick(step: Steps2) {
         var tempVideoUrl = step.videoURL
         var tempThumbNailUrl = step.thumbnailURL
-        var urlToSend: String? = ""
+        var urlToSend: String?
         if (tempVideoUrl == null || TextUtils.isEmpty(tempVideoUrl)) {
             if (tempThumbNailUrl == null || TextUtils.isEmpty(tempThumbNailUrl)) {
                 urlToSend = null
@@ -115,14 +115,14 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         recyclerViewSteps.setAdapter(recipeStepListAdapter)
 
         fab.setOnClickListener() {
-           // RecipeUpdateService.startRecipeUpdate(context, ingredients, recipe)
+            RecipeUpdateService2.startRecipeUpdate(context, ingredients, recipe)
         }
         return rootView;
     }
 
     fun arrangeIngredientList(ingredientsList: ArrayList<Ingredients2>): String {
         var stringBuilder = StringBuilder()
-        var result = ""
+        var result
         for (i in 0 until ingredientsList.size) {
             //var quantity = String.valueOf(ingredientsList.get(i).getQuantity());
             var quantity = ingredientsList.get(i).quantity

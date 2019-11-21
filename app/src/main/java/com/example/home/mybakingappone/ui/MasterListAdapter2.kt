@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes2
 import com.squareup.picasso.Picasso
@@ -30,7 +29,7 @@ class MasterListAdapter2() : RecyclerView.Adapter<MasterListAdapter2.recipeViewH
         this.clickHandler = clickHandler
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):recipeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): recipeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recipe_grid_item_layout, parent, false)
         return recipeViewHolder(view)
     }
@@ -41,7 +40,7 @@ class MasterListAdapter2() : RecyclerView.Adapter<MasterListAdapter2.recipeViewH
         //holder.setData(recipes.get(position))
         Picasso.with(context).load((recipes.get(position).image).toInt()).error(R.mipmap.ic_launcher).into(holder.recipeImage)
         holder.recipeText.setText(recipes.get(position).name)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             clickHandler.onRecipeClick(recipes.get(position))
         }
     }
@@ -51,7 +50,7 @@ class MasterListAdapter2() : RecyclerView.Adapter<MasterListAdapter2.recipeViewH
         notifyDataSetChanged()
     }
 
-    class recipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class recipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recipeImage = itemView.findViewById(R.id.recipe_image) as ImageView
         val recipeText = itemView.findViewById(R.id.recipe_name) as TextView
     }

@@ -12,10 +12,10 @@ fun parseRecipeJson(context: Context, myResponse: String): ArrayList<Recipes2>? 
     var recipes = ArrayList<Recipes2>()
     var ingredients = ArrayList<Ingredients2>()
     var steps = ArrayList<Steps2>()
-    var id = 0
-    var name = ""
-    var servings = 0
-    var image = ""
+    var id
+    var name
+    var servings
+    var image
 
 
     if (myResponse != null) {

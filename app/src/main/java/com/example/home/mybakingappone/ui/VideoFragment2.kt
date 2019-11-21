@@ -11,10 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.example.home.mybakingappone.R
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
@@ -41,9 +37,12 @@ class VideoFragment2 : Fragment() {
     var player: SimpleExoPlayer? = null
 
     object Position {
-        @JvmStatic var playbackPosition = 0L //Changed to this for kotlin
-        @JvmStatic var playWhenReady = true
-        @JvmStatic var currentWindow = 0
+        @JvmStatic
+        var playbackPosition = 0L //Changed to this for kotlin
+        @JvmStatic
+        var playWhenReady = true
+        @JvmStatic
+        var currentWindow = 0
         val BANDWIDTH_METER = DefaultBandwidthMeter()
 
     }
@@ -53,7 +52,7 @@ class VideoFragment2 : Fragment() {
     //final AtomicBoolean playBackState = new AtomicBoolean();
 
     //Empty constructor is necessary for instantiating the fragment
-     fun VideoFragment2() {
+    fun VideoFragment2() {
 
     }
 
@@ -129,7 +128,7 @@ class VideoFragment2 : Fragment() {
 
     fun initializePlayer(myurl: String?) {
         //Toast.makeText(getActivity(), "myurl is: " + myurl, Toast.LENGTH_SHORT).show()
-        if (myurl == null || TextUtils.isEmpty(myurl)||myurl=="") {
+        if (myurl == null || TextUtils.isEmpty(myurl) || myurl == "") {
             //Toast.makeText(getActivity(), "myurl is null " + myurl, Toast.LENGTH_SHORT).show()
             playerView.setDefaultArtwork(BitmapFactory.decodeResource
             (getActivity()!!.getResources(), R.drawable.question_mark))
@@ -179,6 +178,7 @@ class VideoFragment2 : Fragment() {
     fun setPlaybackPosition1(i: Long) {
         Position.playbackPosition = i;
     }
+
     @SuppressLint("InlinedApi")
     fun hideSystemUi() {
         playerView.systemUiVisibility
