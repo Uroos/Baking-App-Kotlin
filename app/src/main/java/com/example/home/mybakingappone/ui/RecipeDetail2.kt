@@ -45,7 +45,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .add(R.id.video_container, videoFragment)
                     .commit()
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription("")
+            recipeStepDescriptionFragment.setDescription("","")
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
@@ -82,12 +82,13 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         super.onSaveInstanceState(outState)
     }
 
-    override fun onStepSelected(description: String, videoUrl: String?) {
+    override fun onStepSelected(description: String,shortDescription:String, videoUrl: String?) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
             val intent = Intent(this, RecipeStepDetail2::class.java)
             intent.putExtra(getString(R.string.recipe_detail_intent_description), description)
             intent.putExtra(getString(R.string.recipe_detail_intent_url), videoUrl)
+            intent.putExtra(getString(R.string.recipe_detail_intent_short_description),shortDescription)
             startActivity(intent)
         } else {
             val fragmentManager = supportFragmentManager
@@ -99,7 +100,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .commit()
 
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription(description)
+            recipeStepDescriptionFragment.setDescription(description,shortDescription)
             fragmentManager.beginTransaction()
                     .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()

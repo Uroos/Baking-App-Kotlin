@@ -15,7 +15,7 @@ class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.rec
     private lateinit var steps: List<Steps2>
     lateinit var clickHandler: RecipeStepListAdapter2.RecipeStepListAdapterOnClickHandler
 
-    // The interface that receives onClick messages
+    // The interface that receives onClick messages. onStepClick is implemented in RecipeStepFragment2
     interface RecipeStepListAdapterOnClickHandler {
         fun onStepClick(step: Steps2)
     }

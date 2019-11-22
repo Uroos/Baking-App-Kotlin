@@ -28,6 +28,7 @@
         <activity
             android:name=".ui.RecipeStepDetail2"
             android:label="Recipe Steps"
+            android:theme="@style/RecipeStepDetailTheme"
             android:parentActivityName=".ui.RecipeDetail2" />
 
         <service android:name=".RecipeUpdateService2" />

@@ -176,12 +176,12 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
     }
 
-    override fun onUpdate(s: String?) {
-        if (s != null) {
+    override fun onUpdate(response: String?) {
+        if (response != null) {
             //https://stackoverflow.com/questions/51376954/how-to-use-gson-deserialize-to-arraylist-in-kotlin
             var gson = Gson()
             val itemType = object : TypeToken<ArrayList<Recipes2>>() {}.type
-            recipes = gson.fromJson<ArrayList<Recipes2>>(s, itemType)
+            recipes = gson.fromJson<ArrayList<Recipes2>>(response, itemType)
 
             recipes!!.get(0).image = R.drawable.nutella_pie.toString()
             recipes!!.get(1).image = R.drawable.brownies.toString()
