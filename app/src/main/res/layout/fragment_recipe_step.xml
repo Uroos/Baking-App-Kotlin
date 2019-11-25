@@ -1,55 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Only adding id to scroll view saves its state.-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView_recipe_step"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height40"
-        android:background="@color/colorPrimaryLight">
-
-        <TextView
-            android:id="@+id/tv_recipe_name"
-            style="@style/RecipeName"
-            tools:text="Recipe Name"/>
-    </FrameLayout>
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/scrollView_recipe_step"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryLight">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_like"
+                style="@style/FloatingActionButton" />
+
+
+            <FrameLayout
+                android:id="@+id/photo_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--suppress AndroidLintContentDescription -->
+                <ImageView
+                    android:id="@+id/iv_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/nutella_pie" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/scrim" />
+            </FrameLayout>
+
+            <!--            style="@style/RecipeName"-->
+
+            <TextView
+                android:id="@+id/tv_recipe_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginEnd="@dimen/margin4"
+                android:layout_marginBottom="32dp"
+                android:paddingStart="16dp"
+                android:textColor="@android:color/white"
+                android:textSize="36sp"
+                tools:text="Recipe Name" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_arrow"
+                android:layout_width="@dimen/fabwidth"
+                android:layout_height="@dimen/fabheight"
+                android:layout_marginLeft="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:background="@drawable/button_favorite"
+                android:contentDescription="@string/fab_text"
+                android:src="@drawable/baseline_arrow_back_ios_white_48" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:paddingStart="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/baseline_schedule_white_24"
+                        android:tint="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="3h 45 min"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/baseline_schedule_white_24"
+                        android:tint="@color/colorAccent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="430 cal"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_star_black_18"
+                    android:tint="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_star_black_18"
+                    android:tint="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_star_black_18"
+                    android:tint="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_star_black_18"
+                    android:tint="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/baseline_star_white_18" />
+            </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".ui.RecipeDetail2">
+            android:layout_height="@dimen/height80"
+            android:layout_marginTop="@dimen/padding16"
+            android:layout_marginBottom="@dimen/padding16"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_ingredients"
-                style="@style/Ingredients"
-                tools:text="Ingredients will go here" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/margin4"
-                android:layout_weight="8">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="480"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="24sp"
+                    tools:text="480" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_recipe_step"
-                    style="@style/RecyclerViewSteps" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:text="Calories"
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    style="@style/FloatingActionButton" />
-            </FrameLayout>
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textSize="18sp"
+                    tools:text="Calories" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="53g"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="24sp"
+                    tools:text="53g" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:text="Proteins"
+
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textSize="18sp"
+                    tools:text="Proteins" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="26g"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="24sp"
+                    tools:text="26g" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:text="Total Fat"
+
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textSize="18sp"
+                    tools:text="Total Fat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="13g"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="24sp"
+                    tools:text="13g" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:text="Total Carbs"
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textSize="18sp"
+                    tools:text="Total Carbs" />
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+
+        android:paddingStart="@dimen/padding16"
+            android:text="Ingredients"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tv_ingredients"
+            style="@style/Ingredients"
+            tools:text="Ingredients will go here" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Add all to shopping list" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding16"
+            android:layout_marginBottom="16dp"
+            android:text="How to cook?"
+            android:background="@color/white"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="24sp"
+            tools:text="How to cook?" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recipe_step"
+            style="@style/RecyclerViewSteps" />
+
+    </LinearLayout>
+</ScrollView>

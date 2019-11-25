@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:text="@string/Step" />

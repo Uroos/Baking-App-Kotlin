@@ -24,6 +24,7 @@
         <activity
             android:name=".ui.RecipeDetail2"
             android:label="Details"
+            android:theme="@style/RecipeStepTheme"
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.RecipeStepDetail2"

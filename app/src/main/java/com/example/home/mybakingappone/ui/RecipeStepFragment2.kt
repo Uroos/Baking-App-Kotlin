@@ -1,40 +1,49 @@
 package com.example.home.mybakingappone.ui
 
-
-//import com.example.home.mybakingappone.RecipeUpdateService
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.app.NavUtils
+import android.support.v4.app.TaskStackBuilder
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.RecipeUpdateService2
 import com.example.home.mybakingappone.model.Ingredients2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.example.home.mybakingappone.ui.RecipeStepFragment2.RecipeClass.recipe
+import com.squareup.picasso.Picasso
 import timber.log.Timber
+import android.graphics.Color.parseColor
+import android.graphics.drawable.shapes.OvalShape
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.Color
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAdapterOnClickHandler {
 
-    //@BindView(R.id.tv_recipe_name)
     lateinit var textViewRecipeName: TextView
-    //@BindView(R.id.rv_recipe_step)
     lateinit var recyclerViewSteps: RecyclerView
-    //@BindView(R.id.tv_ingredients)
     lateinit var textViewIngredients: TextView
-    //@BindView(R.id.fab)
-    lateinit var fab: FloatingActionButton
+    lateinit var fabLike: FloatingActionButton
+    lateinit var fabArrow: FloatingActionButton
+    lateinit var imageViewRecipe: ImageView
+    lateinit var imageViewArrow: ImageView
+
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
 
     private lateinit var callback: OnStepClickListener
@@ -88,12 +97,6 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false)
         val activity = activity as Context
-
-        textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
-        recyclerViewSteps = rootView.findViewById(R.id.rv_recipe_step)
-        textViewIngredients = rootView.findViewById(R.id.tv_ingredients)
-        fab = rootView.findViewById(R.id.fab)
-
         // Inflate the RecipeStepFragment layout
         if (savedInstanceState == null) {
             Timber.v("savedinstancestate is null. trying to get stored recipe")
@@ -104,18 +107,28 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
             steps = recipe!!.steps
             ingredientsList = recipe!!.ingredients
         }
-        textViewRecipeName.setText(recipe!!.name)
-        ingredients = arrangeIngredientList(ingredientsList)
-        textViewIngredients.setText(ingredients)
-
+        textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
+        textViewIngredients = rootView.findViewById(R.id.tv_ingredients)
+        imageViewRecipe = rootView.findViewById(R.id.iv_recipe)
+        fabLike = rootView.findViewById(R.id.fab_like)
+        fabArrow=rootView.findViewById(R.id.fab_arrow)
+        recyclerViewSteps = rootView.findViewById(R.id.rv_recipe_step)
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerViewSteps.setLayoutManager(linearLayoutManager)
         recyclerViewSteps.setHasFixedSize(true)
         recipeStepListAdapter = RecipeStepListAdapter2(activity, steps, this)//added !!
         recyclerViewSteps.setAdapter(recipeStepListAdapter)
 
-        fab.setOnClickListener() {
+        textViewRecipeName.setText(recipe!!.name)
+        ingredients = arrangeIngredientList(ingredientsList)
+        textViewIngredients.setText(ingredients)
+        Picasso.with(this.context).load((recipe!!.image).toInt()).error(R.mipmap.ic_launcher).into(imageViewRecipe)
+
+        fabLike.setOnClickListener() {
             RecipeUpdateService2.startRecipeUpdate(context, ingredients, recipe)
+        }
+        fabArrow.setOnClickListener(){
+            getActivity()?.onBackPressed()
         }
         return rootView;
     }

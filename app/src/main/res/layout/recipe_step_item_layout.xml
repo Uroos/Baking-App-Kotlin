@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp">
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tv_recipe_step"
-    style="@style/RecipeStepItem"
-    tools:text="Each recipe step will go here" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:tint="@color/colorAccent"
+        android:src="@drawable/round_add_circle_white_18dp" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tv_recipe_step"
+        style="@style/RecipeStepItem"
+        tools:text="Each recipe step will go here" />
+</LinearLayout>

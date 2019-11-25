@@ -1,33 +1,20 @@
 package com.example.home.mybakingappone.ui
 
+import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
-import com.example.home.mybakingappone.R
-import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.service.autofill.Validators.or
 import android.support.v7.app.ActionBar
-import android.view.WindowManager
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.View
+import android.view.*
+import com.example.home.mybakingappone.R
 
 
 class RecipeStepDetail2 : AppCompatActivity() {
     var description: String = ""
-    var shortDescription:String=""
+    var shortDescription: String = ""
     var videourl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +30,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
         //Restore the fragment's instance
         if (this.intent != null) {
             description = intent.getStringExtra(getString(R.string.recipe_detail_intent_description))
-            shortDescription=intent.getStringExtra(getString(R.string.recipe_detail_intent_short_description))
+            shortDescription = intent.getStringExtra(getString(R.string.recipe_detail_intent_short_description))
             videourl = intent.getStringExtra(getString(R.string.recipe_detail_intent_url))
         }
 
@@ -57,13 +44,22 @@ class RecipeStepDetail2 : AppCompatActivity() {
 
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             // Only set the toolbar when in portrait mode.
-            var toolbar:Toolbar = findViewById(R.id.toolbar)
+            val toolbar: Toolbar = findViewById(R.id.toolbar)
             setSupportActionBar(toolbar)
+            this.supportActionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            val inflater: LayoutInflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val v: View = inflater.inflate(R.layout.custom_actionbar, null);
+            val p: ActionBar.LayoutParams = ActionBar.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    Gravity.RIGHT)
+            this.supportActionBar!!.setCustomView(v, p)
+            this.supportActionBar!!.setDisplayShowTitleEnabled(true)
             this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            toolbar.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END)
 
+            /////////////////////////////////////////
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription(description,shortDescription)
+            recipeStepDescriptionFragment.setDescription(description, shortDescription)
             val fragmentManager1 = supportFragmentManager
             fragmentManager1.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)

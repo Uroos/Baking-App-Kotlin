@@ -20,8 +20,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
-
-        this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val linearLayoutCheck: LinearLayout? = findViewById(R.id.video_description_linear_layout)
         // Tablet is connected
@@ -32,10 +31,11 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                  recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                // Toast.makeText(this, "recipe number is=" + recipe!!.name, Toast.LENGTH_SHORT).show()
             }
+            val fragmentManager = supportFragmentManager
+            // Inflate all three fragments that will be displayed in this activity
+
             val recipeStepFragment = RecipeStepFragment2()
             recipeStepFragment.setRecipe(recipe!!)
-
-            val fragmentManager = supportFragmentManager
             fragmentManager.beginTransaction()
                     .add(R.id.recipe_steps_container, recipeStepFragment)
                     .commit()

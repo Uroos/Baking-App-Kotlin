@@ -7,7 +7,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- Theme of activity RecipeDetail2 -->
+    <style name="RecipeStepTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
     <!-- Changes color of Status bar. RecipeStepDetail2 -->
     <style name="RecipeStepDetailTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -21,6 +30,7 @@
         <!-- THIS is where you can color the arrow! -->
         <item name="colorControlNormal">@color/botecelli</item>
     </style>
+
     <!--Toolbar theme-->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
@@ -33,6 +43,7 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
+
     <!-- Progress bar setting.-->
     <style name="RedAccent" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimaryDark</item>
@@ -83,11 +94,11 @@
     <style name="Ingredients">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_margin">@dimen/margin4</item>
         <item name="android:layout_weight">5</item>
         <item name="android:background">@color/white</item>
         <item name="android:fontFamily">serif</item>
         <item name="android:freezesText">true</item>
+        <item name="android:paddingStart">@dimen/padding16</item>
         <item name="android:padding">@dimen/padding8</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textStyle">normal</item>
@@ -96,11 +107,10 @@
 
     <style name="RecyclerViewSteps">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@android:color/white</item>
-        <item name="android:clickable">true</item>
-        <item name="android:drawSelectorOnTop">true</item>
-        <item name="android:focusable">true</item>
+<!--        <item name="android:clickable">true</item>-->
+<!--        <item name="android:drawSelectorOnTop">true</item>-->
     </style>
 
     <style name="FloatingActionButton">
@@ -111,7 +121,7 @@
         <item name="android:layout_marginRight">@dimen/margin8</item>
         <item name="android:layout_marginTop">@dimen/margin8</item>
         <item name="android:background">@drawable/button_favorite</item>
-        <item name="android:src">@drawable/ic_action_heart</item>
+        <item name="android:src">@drawable/baseline_favorite_white_36</item>
     </style>
 
     <!-- Fragment RecipeStepDescription. -->
@@ -148,6 +158,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/height80</item>
         <item name="android:background">@drawable/grid_color_selector</item>
+        <item name="android:paddingStart">@dimen/padding16</item>
         <item name="android:fontFamily">serif</item>
         <item name="android:freezesText">true</item>
         <item name="android:gravity">center_vertical</item>
@@ -189,12 +200,14 @@
         <item name="android:layout_margin">@dimen/margin4</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="RightPaneVideo">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">5</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="RightPaneDescription">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
