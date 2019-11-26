@@ -2,8 +2,6 @@ package com.example.home.mybakingappone.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -17,7 +15,7 @@ import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes2
 
 
-class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListener,NavigationView.OnNavigationItemSelectedListener {
+class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -49,6 +47,7 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
         toggle.syncState()
         navigationView.setNavigationItemSelectedListener(this)
     }
+
     // When hamburger icon is pressed it opens the navigation drawer.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

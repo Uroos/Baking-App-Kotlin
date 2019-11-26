@@ -61,8 +61,9 @@ class RecipeStepDetail2 : AppCompatActivity() {
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
             recipeStepDescriptionFragment.setDescription(description, shortDescription)
             val fragmentManager1 = supportFragmentManager
+            // Add places new fragment on top of old one. So I have put in replace
             fragmentManager1.beginTransaction()
-                    .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
+                    .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
         }
     }
