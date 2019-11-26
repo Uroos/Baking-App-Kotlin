@@ -11,6 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <FrameLayout
@@ -19,8 +20,14 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_like"
-                style="@style/FloatingActionButton" />
+            android:layout_gravity="right"
+            android:src="@drawable/baseline_favorite_white_36"
+            style="@style/FloatingActionButton" />
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_arrow"
+                style="@style/FloatingActionButton"
+                android:src="@drawable/baseline_arrow_back_ios_white_48" />
 
             <FrameLayout
                 android:id="@+id/photo_container"
@@ -54,15 +61,6 @@
                 android:textSize="36sp"
                 tools:text="Recipe Name" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_arrow"
-                android:layout_width="@dimen/fabwidth"
-                android:layout_height="@dimen/fabheight"
-                android:layout_marginLeft="@dimen/margin8"
-                android:layout_marginTop="@dimen/margin8"
-                android:background="@drawable/button_favorite"
-                android:contentDescription="@string/fab_text"
-                android:src="@drawable/baseline_arrow_back_ios_white_48" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,7 +152,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height80"
+            android:layout_height="60dp"
             android:layout_marginTop="@dimen/padding16"
             android:layout_marginBottom="@dimen/padding16"
             android:layout_marginHorizontal="16dp"
@@ -181,9 +179,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:text="Calories"
-
                     android:textColor="@android:color/secondary_text_dark"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="Calories" />
             </LinearLayout>
 
@@ -209,7 +206,7 @@
                     android:text="Proteins"
 
                     android:textColor="@android:color/secondary_text_dark"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="Proteins" />
             </LinearLayout>
 
@@ -235,7 +232,7 @@
                     android:text="Total Fat"
 
                     android:textColor="@android:color/secondary_text_dark"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="Total Fat" />
             </LinearLayout>
 
@@ -260,7 +257,7 @@
                     android:gravity="center_horizontal"
                     android:text="Total Carbs"
                     android:textColor="@android:color/secondary_text_dark"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="Total Carbs" />
             </LinearLayout>
         </LinearLayout>
@@ -270,7 +267,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@color/white"
-
         android:paddingStart="@dimen/padding16"
             android:text="Ingredients"
             android:textColor="@android:color/secondary_text_light"
@@ -287,8 +283,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/white"
-
+            android:textColor="@color/white"
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="Add all to shopping list" />
 
@@ -298,7 +293,6 @@
             android:layout_marginStart="@dimen/padding16"
             android:layout_marginBottom="16dp"
             android:text="How to cook?"
-            android:background="@color/white"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="24sp"
             tools:text="How to cook?" />

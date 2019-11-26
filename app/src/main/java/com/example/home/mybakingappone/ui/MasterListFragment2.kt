@@ -5,21 +5,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.NonNull
 import android.support.annotation.VisibleForTesting
+import android.support.design.widget.NavigationView
 import android.support.test.espresso.IdlingResource
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.WindowManager
+import android.widget.*
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource2
 import com.example.home.mybakingappone.model.Recipes2
@@ -41,11 +47,12 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     private lateinit var context2: Context
 
     private var onLineIntentFilter: IntentFilter? = null
-    private lateinit var onLineBroadCastReceiver: BroadcastReceiver
+     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
 
     private var recipes: ArrayList<Recipes2>? = ArrayList()
     private var recipeAdapter: MasterListAdapter2? = null
     private var layoutManager: GridLayoutManager? = null
+    private var frameLayout:FrameLayout?=null
 
     private var savedRecyclerLayoutState: Parcelable? = null
     private var bundleRecyclerViewState: Bundle? = null
@@ -105,11 +112,13 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         // gotten from raywenderlick fragment tutorial with dogs list
         val activity = activity as Context
 
+        frameLayout=rootView.findViewById(R.id.framelayout_header_main_page)
         recyclerView = rootView.findViewById(R.id.rv_recipes)
         errorMessageDisplay = rootView.findViewById(R.id.tv_error_message_display)
         loadingIndicator = rootView.findViewById(R.id.pb_loading_indicator)
-
         loadingIndicator.setVisibility(View.VISIBLE)
+
+
         getIdlingResource()
 
         task = OkHttpHandler2()
@@ -125,9 +134,14 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
                 layoutManager = GridLayoutManager(activity, 1)
             } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 layoutManager = GridLayoutManager(activity, 2)
-
+                //.setLayoutParams(new LinearLayout.LayoutParams(100,100);
+                val lp:LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                frameLayout!!.setLayoutParams(lp)
+                val textViewGreeting = frameLayout!!.findViewById<TextView>(R.id.tv_greeting)
+                textViewGreeting.visibility=View.INVISIBLE
+                val textViewBelowGreeting=frameLayout!!.findViewById<TextView>(R.id.tv_below_greeting)
+                textViewBelowGreeting.visibility=View.INVISIBLE
             }
-
         }
 
         recipes = ArrayList()
@@ -137,43 +151,43 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         recyclerView.setAdapter(recipeAdapter)
 
         if (savedInstanceState != null) {
-            loadingIndicator.setVisibility(View.INVISIBLE);
-            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT) as Parcelable
-            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
+            if(isOnline(context2)) {
+                loadingIndicator.setVisibility(View.INVISIBLE);
+                savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT) as Parcelable
+                recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
+            }else{
+                showErrorMessage()
+            }
         }
 
         setupData()
         onLineIntentFilter = IntentFilter()
         onLineIntentFilter!!.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         onLineBroadCastReceiver = OnLineBroadCastReceiver
+
         getIdlingResource()
         return rootView
     }
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(this.context2)
-                .registerReceiver(onLineBroadCastReceiver, onLineIntentFilter!!)
+        context2.registerReceiver(onLineBroadCastReceiver!!, onLineIntentFilter!!)
     }
 
     override fun onPause() {
         super.onPause()
-        //changed from this.context!!
-        LocalBroadcastManager.getInstance(this.context2).unregisterReceiver(onLineBroadCastReceiver)
+        context2.unregisterReceiver(onLineBroadCastReceiver!!)
     }
 
     fun setupData() {
         task = OkHttpHandler2()
-        //        task.setUpdateListener(this, mIdlingResource);
         task.setUpdateListener(this, mIdlingResource)
         if (isOnline(context2)) {
             recyclerView.setVisibility(View.INVISIBLE)
-            //Toast.makeText(context, "is online", Toast.LENGTH_SHORT).show();
             task.execute(RECIPES_URL)
         } else {
             showErrorMessage()
         }
-
     }
 
     override fun onUpdate(response: String?) {
@@ -233,16 +247,15 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         }
     }
 
-    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
+    val OnLineBroadCastReceiver = object: BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
             var action = intent!!.getAction()
             var connected = (action.equals(ConnectivityManager.CONNECTIVITY_ACTION))
+            Toast.makeText(context,"connected now",Toast.LENGTH_LONG).show()
             if (connected) {
                 setupData()
-            } else {
-                showErrorMessage()
-            }
+            } 
         }
     }
 }

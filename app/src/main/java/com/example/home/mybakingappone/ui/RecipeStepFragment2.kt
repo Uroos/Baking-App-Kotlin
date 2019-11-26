@@ -126,6 +126,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
 
         fabLike.setOnClickListener() {
             RecipeUpdateService2.startRecipeUpdate(context, ingredients, recipe)
+            Toast.makeText(this.context,"Your recipe is added to the widget!", Toast.LENGTH_SHORT).show()
         }
         fabArrow.setOnClickListener(){
             getActivity()?.onBackPressed()

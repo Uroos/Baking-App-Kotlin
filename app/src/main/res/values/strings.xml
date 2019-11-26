@@ -27,5 +27,7 @@
     <string name="Step"><u>Step</u></string>
     <string name="recipe_detail_intent_short_description">short_step_description</string>
     <string name="recipe_step_description_fragment_outstate_short_description">short_description</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Closed</string>
 
 </resources>

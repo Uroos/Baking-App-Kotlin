@@ -1,21 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- Following three lines result in transparent status bar and image extends till top. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
+
+    </style>
+
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!-- Theme of activity RecipeDetail2 -->
     <style name="RecipeStepTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--        <item name="android:windowNoTitle">true</item>-->
     </style>
 
     <!-- Changes color of Status bar. RecipeStepDetail2 -->
@@ -26,6 +38,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <item name="android:statusBarColor">@android:color/black</item>
     </style>
+
     <style name="MyApp.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- THIS is where you can color the arrow! -->
         <item name="colorControlNormal">@color/botecelli</item>
@@ -109,19 +122,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@android:color/white</item>
-<!--        <item name="android:clickable">true</item>-->
-<!--        <item name="android:drawSelectorOnTop">true</item>-->
+        <!--        <item name="android:clickable">true</item>-->
+        <!--        <item name="android:drawSelectorOnTop">true</item>-->
     </style>
 
     <style name="FloatingActionButton">
         <item name="android:layout_width">@dimen/fabwidth</item>
         <item name="android:layout_height">@dimen/fabheight</item>
-        <item name="android:layout_gravity">right</item>
         <item name="android:contentDescription">@string/fab_text</item>
         <item name="android:layout_marginRight">@dimen/margin8</item>
-        <item name="android:layout_marginTop">@dimen/margin8</item>
+        <item name="android:layout_marginEnd">@dimen/margin8</item>
+        <item name="android:layout_marginStart">@dimen/margin8</item>
+        <item name="android:layout_marginTop">24dp</item>
         <item name="android:background">@drawable/button_favorite</item>
-        <item name="android:src">@drawable/baseline_favorite_white_36</item>
     </style>
 
     <!-- Fragment RecipeStepDescription. -->
@@ -147,9 +160,10 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginStart">@dimen/padding16</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:fontFamily">serif</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left</item>
         <item name="android:textSize">@dimen/text_size_24</item>
     </style>
 

@@ -1,13 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.Main2Activity">
 
+    <FrameLayout
+        android:id="@+id/framelayout_header_main_page"
+        android:layout_width="match_parent"
+        android:layout_height="240dp">
+
+        <FrameLayout
+            android:id="@+id/photo_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--suppress AndroidLintContentDescription -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pasteries" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/scrim" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/tv_greeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingStart="@dimen/padding16"
+                android:text="Good afternoon Sam!"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_below_greeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_greeting"
+                android:layout_gravity="bottom"
+                android:paddingStart="@dimen/padding16"
+                android:text="Let's end with a yummy dessert."
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </FrameLayout>
     <!-- May need to put drawable selector here. it is already present in list item-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recipes"
@@ -21,6 +72,5 @@
     <ProgressBar
         android:id="@+id/pb_loading_indicator"
         style="@style/ProgressBar" />
-</FrameLayout>
-
+</LinearLayout>
 
