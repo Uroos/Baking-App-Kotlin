@@ -21,7 +21,7 @@
         tools:text="Nutella Pie" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="bottom"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
@@ -29,7 +29,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal">
 
@@ -51,7 +51,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal">
 
@@ -60,7 +60,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="4dp"
-                android:src="@drawable/baseline_schedule_white_24"
+                android:scaleY="1.2"
+                android:scaleX="1.2"
+                android:src="@drawable/fire"
                 android:tint="@color/colorAccent" />
 
             <TextView

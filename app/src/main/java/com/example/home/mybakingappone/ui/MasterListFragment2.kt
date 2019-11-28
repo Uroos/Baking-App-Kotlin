@@ -12,6 +12,7 @@ import android.support.annotation.NonNull
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
 import android.support.v4.app.Fragment
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -40,6 +41,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
     private var onLineIntentFilter: IntentFilter? = null
     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
+    private var connectedAlready:Boolean=false
 
     private var recipes: ArrayList<Recipes2>? = ArrayList()
     private var recipeAdapter: MasterListAdapter2? = null
@@ -89,8 +91,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             //Context of MainActivity
             recipeClickCallback = context1
         } else {
-            throw ClassCastException(
-                    context1.toString() + " must implement OnDogSelected.")
+            throw ClassCastException(context1.toString() + " must implement OnImageClickListener.")
         }
     }
 
@@ -109,7 +110,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         errorMessageDisplay = rootView.findViewById(R.id.tv_error_message_display)
         loadingIndicator = rootView.findViewById(R.id.pb_loading_indicator)
         loadingIndicator.setVisibility(View.VISIBLE)
-
 
         getIdlingResource()
 
@@ -159,6 +159,15 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
         getIdlingResource()
         return rootView
+    }
+    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            //Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
+            if(!connectedAlready&&(isOnline(context2))){
+                setupData()
+            }
+            connectedAlready= isOnline(context2)
+        }
     }
 
     override fun onResume() {
@@ -239,17 +248,16 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         }
     }
 
-    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
-
-        override fun onReceive(context: Context?, intent: Intent?) {
-            var action = intent!!.getAction()
-            var connected = (action.equals(ConnectivityManager.CONNECTIVITY_ACTION))
-           // Toast.makeText(context, "connected now", Toast.LENGTH_LONG).show()
-            if (connected) {
-                setupData()
-            }
-        }
-    }
+//    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context?, intent: Intent?) {
+//            Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
+//            var action = intent!!.getAction()
+//            var connected = (action.equals(ConnectivityManager.TYPE_WIFI))
+//            if (connected) {
+//                setupData()
+//            }
+//        }
+//    }
 }
 
 

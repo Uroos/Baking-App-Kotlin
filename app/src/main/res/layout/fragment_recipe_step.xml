@@ -20,9 +20,9 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_like"
-            android:layout_gravity="right"
-            android:src="@drawable/baseline_favorite_white_36"
-            style="@style/FloatingActionButton" />
+                style="@style/FloatingActionButton"
+                android:layout_gravity="right"
+                android:src="@drawable/baseline_favorite_white_36" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_arrow"
@@ -64,7 +64,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
@@ -72,7 +72,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="20dp"
                     android:orientation="horizontal">
 
@@ -94,16 +94,18 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="4dp"
-                        android:src="@drawable/baseline_schedule_white_24"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:src="@drawable/fire"
                         android:tint="@color/colorAccent" />
 
                     <TextView
@@ -153,16 +155,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="@dimen/padding16"
             android:layout_marginBottom="@dimen/padding16"
-            android:layout_marginHorizontal="16dp"
             android:background="@color/white"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -186,8 +188,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -212,8 +214,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -238,8 +240,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -267,7 +269,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@color/white"
-        android:paddingStart="@dimen/padding16"
+            android:paddingStart="@dimen/padding16"
             android:text="Ingredients"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="30sp" />
@@ -275,17 +277,27 @@
         <TextView
             android:id="@+id/tv_ingredients"
             style="@style/Ingredients"
+            android:drawableLeft="@drawable/fire"
+            android:drawablePadding="@dimen/padding16"
+            android:drawableTint="@color/colorAccent"
             tools:text="Ingredients will go here" />
 
-        <Button
+        <!--        <Button-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="56dp"-->
+        <!--            android:layout_marginHorizontal="16dp"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:layout_marginBottom="16dp"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:backgroundTint="@color/colorPrimaryDark"-->
+        <!--            android:text="Add all to shopping list" />-->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:text="Add all to shopping list" />
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="@dimen/padding16"
+            android:layout_marginTop="@dimen/padding16"
+            android:layout_marginBottom="@dimen/padding16"
+            android:background="@color/colorPrimaryDark" />
 
         <TextView
             android:layout_width="match_parent"

@@ -21,12 +21,7 @@ class RecipesStepDescriptionFragment2 : Fragment() {
 
     lateinit var description: String
     lateinit var shortDescription: String
-//    object Position {
-//        @JvmStatic
-//        var description = ""
-//        @JvmStatic
-//        var shortDescription=""
-//    }
+    var stepNumber:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,9 +36,15 @@ class RecipesStepDescriptionFragment2 : Fragment() {
         }
         textViewRecipeStepDescription.setText(description)
         // For making a line under the text
+        if(stepNumber==0){
         var content = SpannableString(shortDescription)
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         textViewRecipeStepShortDescription.setText(content)
+        }else{
+            var content = SpannableString("Step "+stepNumber)
+            content.setSpan(UnderlineSpan(), 0, content.length, 0)
+            textViewRecipeStepShortDescription.setText(content)
+        }
         return rootView
     }
 
@@ -51,9 +52,10 @@ class RecipesStepDescriptionFragment2 : Fragment() {
 //        Position.description = description
 //        Position.shortDescription=shortDescription
 //    }
-    fun setDescription(description: String, shortDescription: String) {
+    fun setDescription(description: String, shortDescription: String,stepNumber:Int) {
         this.description = description
         this.shortDescription = shortDescription
+        this.stepNumber=stepNumber
     }
 
     override fun onSaveInstanceState(@NonNull outState: Bundle) {

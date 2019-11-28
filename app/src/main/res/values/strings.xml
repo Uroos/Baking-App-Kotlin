@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Baking App One</string>
+    <string name="app_name">The Baking World</string>
     <string name="appwidget_text">This is your recipe</string>
     <string name="add_widget">Add widget</string>
     <string name="recipe_title">Recipes</string>
@@ -29,5 +29,7 @@
     <string name="recipe_step_description_fragment_outstate_short_description">short_description</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Closed</string>
+    <string name="recipe_detail_intent_position">position</string>
+    <string name="recipe_detail_intent_list_steps">list_steps</string>
 
 </resources>

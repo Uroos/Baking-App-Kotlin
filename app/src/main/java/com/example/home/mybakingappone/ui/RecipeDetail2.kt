@@ -12,7 +12,13 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes2
+import com.example.home.mybakingappone.model.Steps2
 import timber.log.Timber
+import com.google.gson.Gson
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
@@ -47,7 +53,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .add(R.id.video_container, videoFragment)
                     .commit()
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription("","")
+            recipeStepDescriptionFragment.setDescription("","",0)
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
@@ -84,13 +90,16 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         super.onSaveInstanceState(outState)
     }
 
-    override fun onStepSelected(description: String,shortDescription:String, videoUrl: String?) {
+    override fun onStepSelected(description: String,shortDescription:String, videoUrl: String?,position:Int, steps: List<Steps2>) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
             val intent = Intent(this, RecipeStepDetail2::class.java)
             intent.putExtra(getString(R.string.recipe_detail_intent_description), description)
             intent.putExtra(getString(R.string.recipe_detail_intent_url), videoUrl)
             intent.putExtra(getString(R.string.recipe_detail_intent_short_description),shortDescription)
+            intent.putExtra(getString(R.string.recipe_detail_intent_position),position)
+            val json=Gson().toJson(steps)
+            intent.putExtra(getString(R.string.recipe_detail_intent_list_steps),json)
             startActivity(intent)
         } else {
             val fragmentManager = supportFragmentManager
@@ -102,7 +111,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .commit()
 
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription(description,shortDescription)
+            recipeStepDescriptionFragment.setDescription(description,shortDescription,position)
             fragmentManager.beginTransaction()
                     .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
@@ -110,7 +119,6 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
         when (item!!.itemId) {
             // Respond to the action bar's Up/Home button
             android.R.id.home -> {
@@ -132,7 +140,6 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                 return true
             }
         }
-        //return super.onOptionsItemSelected(item);
         return true
     }
 }

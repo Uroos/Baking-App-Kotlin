@@ -12,6 +12,7 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import com.example.home.mybakingappone.R
+import com.example.home.mybakingappone.ui.VideoFragment2.Position.playbackPosition
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -35,6 +36,7 @@ class VideoFragment2 : Fragment() {
 
     lateinit var playerView: PlayerView
     var player: SimpleExoPlayer? = null
+    var urlToDisplay: String?=null
 
     object Position {
         @JvmStatic
@@ -46,24 +48,18 @@ class VideoFragment2 : Fragment() {
         val BANDWIDTH_METER = DefaultBandwidthMeter()
 
     }
-
-    var urlToDisplay: String? = null
-
-    //final AtomicBoolean playBackState = new AtomicBoolean();
-
     //Empty constructor is necessary for instantiating the fragment
     fun VideoFragment2() {
 
     }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         if (savedInstanceState != null) {
             Position.playWhenReady = savedInstanceState.getBoolean(getString(R.string.video_fragment_outstate_playwhenready));
             Position.currentWindow = savedInstanceState.getInt(getString(R.string.video_fragment_outstate_currentWindow));
-            Position.playbackPosition = savedInstanceState.getLong(getString(R.string.video_fragment_outstate_playbackposition))
+            playbackPosition = savedInstanceState.getLong(getString(R.string.video_fragment_outstate_playbackposition))
             urlToDisplay = savedInstanceState.getString("url_to_display")
-            Timber.v("1 retrieved playback position is: " + Position.playbackPosition);
+            //Timber.v("1 retrieved playback position is: " + Position.playbackPosition);
         }
         val rootView = inflater.inflate(R.layout.fragment_video_player, container, false)
         playerView = rootView.findViewById(R.id.video_view)
@@ -74,10 +70,9 @@ class VideoFragment2 : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         updateStartPosition();
-        //outState.putString("url", urlToDisplay);
         outState.putBoolean(getString(R.string.video_fragment_outstate_playwhenready), Position.playWhenReady)
         outState.putInt(getString(R.string.video_fragment_outstate_currentWindow), Position.currentWindow)
-        outState.putLong(getString(R.string.video_fragment_outstate_playbackposition), Position.playbackPosition)
+        outState.putLong(getString(R.string.video_fragment_outstate_playbackposition), playbackPosition)
         outState.putString("url_to_display", urlToDisplay)
 
     }
@@ -142,7 +137,7 @@ class VideoFragment2 : Fragment() {
             if (player == null) {
                 // a factory to create an AdaptiveVideoTrackSelection
                 Timber.v("player is: " + player)
-                Timber.v("playbackposition is: " + Position.playbackPosition)
+                //Timber.v("playbackposition is: " + Position.playbackPosition)
                 val adaptiveTrackSelectionFactory = AdaptiveTrackSelection.Factory(Position.BANDWIDTH_METER)
                 // let the factory create a player instance with default components
                 player = ExoPlayerFactory.newSimpleInstance(DefaultRenderersFactory(getActivity()),
@@ -150,7 +145,8 @@ class VideoFragment2 : Fragment() {
                 playerView.setPlayer(player)
                 player!!.setPlayWhenReady(Position.playWhenReady)
                 //Timber.v("seeking to playbackposition: " + playbackPosition);
-                player!!.seekTo(Position.currentWindow, Position.playbackPosition)
+                //player!!.seekTo(Position.currentWindow, Position.playbackPosition)
+                player!!.seekTo(Position.currentWindow, playbackPosition)
             }
             val mediaSource = buildMediaSource(Uri.parse(myurl))
             player!!.prepare(mediaSource, false, false)
@@ -161,7 +157,8 @@ class VideoFragment2 : Fragment() {
         if (player != null) {
             Position.playWhenReady = player!!.getPlayWhenReady()
             Position.currentWindow = player!!.getCurrentWindowIndex()
-            Position.playbackPosition = player!!.getCurrentPosition()
+            playbackPosition = player!!.getCurrentPosition()
+
             // Timber.v("1 playbackposition retrieved before nulling is: " + playbackPosition);
         }
     }
@@ -176,7 +173,7 @@ class VideoFragment2 : Fragment() {
     }
 
     fun setPlaybackPosition1(i: Long) {
-        Position.playbackPosition = i;
+        playbackPosition = i
     }
 
     @SuppressLint("InlinedApi")
@@ -189,7 +186,6 @@ class VideoFragment2 : Fragment() {
                 .or(SYSTEM_UI_FLAG_HIDE_NAVIGATION)
         //Hides the app bar
         //      | View.SYSTEM_UI_FLAG_FULLSCREEN
-
     }
 
 }

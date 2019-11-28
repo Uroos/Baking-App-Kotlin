@@ -61,7 +61,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
     }
 
     // Method in interface to handle recycler view clicks. Calls onStepSelected implemented in RecipeDetail2
-    override fun onStepClick(step: Steps2) {
+    override fun onStepClick(step: Steps2,position:Int, steps: List<Steps2>) {
         var tempVideoUrl = step.videoURL
         var tempThumbNailUrl = step.thumbnailURL
         var urlToSend: String?
@@ -74,12 +74,12 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         } else {
             urlToSend = tempVideoUrl;
         }
-        callback.onStepSelected(step.description,step.shortDescription, urlToSend);
+        callback.onStepSelected(step.description,step.shortDescription, urlToSend,position,steps);
     }
 
     // OnImageClickListener interface, calls a method in the host activity named onImageSelected
     interface OnStepClickListener {
-        fun onStepSelected(description: String, shortDescription:String, videoUrl: String?)
+        fun onStepSelected(description: String, shortDescription:String, videoUrl: String?,position:Int, steps: List<Steps2>)
     }
 
     // Override onAttach to make sure that the container activity has implemented the callback

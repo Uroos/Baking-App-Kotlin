@@ -17,7 +17,7 @@ class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.rec
 
     // The interface that receives onClick messages. onStepClick is implemented in RecipeStepFragment2
     interface RecipeStepListAdapterOnClickHandler {
-        fun onStepClick(step: Steps2)
+        fun onStepClick(step: Steps2,position:Int, steps: List<Steps2>)
     }
 
     constructor(context: Context, steps: List<Steps2>, clickHandler: RecipeStepListAdapterOnClickHandler) : this() {
@@ -37,7 +37,7 @@ class RecipeStepListAdapter2() : RecyclerView.Adapter<RecipeStepListAdapter2.rec
     override fun onBindViewHolder(holder: RecipeStepListAdapter2.recipeStepViewHolder, position: Int) {
         holder.recipeText.setText(steps.get(position).shortDescription)
         holder.itemView.setOnClickListener {
-            clickHandler.onStepClick(steps.get(position))
+            clickHandler.onStepClick(steps.get(position),position,steps)
         }
     }
 
