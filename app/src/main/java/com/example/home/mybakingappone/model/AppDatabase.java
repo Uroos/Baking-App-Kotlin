@@ -5,9 +5,10 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
-@Database(entities = {Recipes2.class}, version = 1, exportSchema = false)
+@Database(entities = {Recipes2.class}, version =4 , exportSchema = false)
 @TypeConverters({IngredientsConvertor.class, StepsConvertor.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -22,6 +23,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 //Log.d(TAG, "Creating new database instance");
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         AppDatabase.class, AppDatabase.DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .allowMainThreadQueries()
                         .build();
             }
         }

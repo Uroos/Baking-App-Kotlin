@@ -8,6 +8,11 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.home.mybakingappone.RecipeUpdateService2.someStrings.ACTION_RECIPE_UPDATE
 import com.example.home.mybakingappone.model.Recipes2
+import com.google.gson.Gson
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.JSON
+import kotlinx.serialization.list
+import kotlinx.serialization.stringify
 import timber.log.Timber
 
 class RecipeUpdateService2 : IntentService("service") {
@@ -21,7 +26,7 @@ class RecipeUpdateService2 : IntentService("service") {
         fun startRecipeUpdate(context: Context?, ingredients: String, recipe: Recipes2?) {
             var intent = Intent(context, RecipeUpdateService2::class.java)
             var bundle = Bundle()
-            bundle.putSerializable(context!!.getString(R.string.widget_key_recipe), recipe);
+            bundle.putSerializable(context!!.getString(R.string.widget_key_recipe), recipe)
             intent.setAction(ACTION_RECIPE_UPDATE);
             intent.putExtra(context.getString(R.string.widget_key_ingredients), ingredients)
             intent.putExtras(bundle)

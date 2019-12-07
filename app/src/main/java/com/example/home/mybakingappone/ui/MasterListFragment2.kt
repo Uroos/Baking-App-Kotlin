@@ -15,12 +15,15 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource2
+import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppExecutor
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_LAYOUT
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.RECIPES_URL
@@ -54,6 +57,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     lateinit var recyclerView: RecyclerView
     lateinit var errorMessageDisplay: TextView
     lateinit var loadingIndicator: ProgressBar
+    //lateinit var appDb:AppDatabase
 
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
     private lateinit var recipeClickCallback: OnImageClickListener
@@ -104,6 +108,11 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
         // gotten from raywenderlick fragment tutorial with dogs list
         val activity = activity as Context
+
+        // Accessing room database
+        //appDb = AppDatabase.getsInstance(activity)
+        //val name = appDb.taskDao().getRecipe(0).name
+        //Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
 
         frameLayout = rootView.findViewById(R.id.framelayout_header_main_page)
         recyclerView = rootView.findViewById(R.id.rv_recipes)
@@ -160,15 +169,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         getIdlingResource()
         return rootView
     }
-    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            //Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
-            if(!connectedAlready&&(isOnline(context2))){
-                setupData()
-            }
-            connectedAlready= isOnline(context2)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -203,11 +203,25 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             recipes!!.get(2).image = R.drawable.yellow_cake.toString()
             recipes!!.get(3).image = R.drawable.cheese_cake.toString()
 
+            // Saving to database
+            val db =AppDatabase.getsInstance(context2)
+            db.taskDao().insertRecipe(recipes!!.get(0))
+            db.taskDao().insertRecipe(recipes!!.get(1))
+            db.taskDao().insertRecipe(recipes!!.get(2))
+            db.taskDao().insertRecipe(recipes!!.get(3))
+
+            //  AppExecutor.getInstance().diskIO().execute(Runnable {
+               // val name = appDb.taskDao().getRecipe(id.toLong())
+               // Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
+            //})
+            //val name = appDb.taskDao().getRecipe(0).name
+            //Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
+
             recipeAdapter!!.setRecipeData((recipes!!))
             recipeAdapter!!.notifyDataSetChanged()
             recyclerView.setAdapter(recipeAdapter)
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
-
+            Log.v("MasterListFragment","recipe length is " + recipes!!.size)
             showRecipeData()
         } else {
             showErrorMessage()
@@ -248,16 +262,15 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         }
     }
 
-//    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context?, intent: Intent?) {
-//            Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
-//            var action = intent!!.getAction()
-//            var connected = (action.equals(ConnectivityManager.TYPE_WIFI))
-//            if (connected) {
-//                setupData()
-//            }
-//        }
-//    }
+    val OnLineBroadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            //Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
+            if(!connectedAlready&&(isOnline(context2))){
+                setupData()
+            }
+            connectedAlready= isOnline(context2)
+        }
+    }
 }
 
 

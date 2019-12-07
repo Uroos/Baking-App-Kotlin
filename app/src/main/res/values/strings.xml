@@ -31,5 +31,7 @@
     <string name="navigation_drawer_close">Closed</string>
     <string name="recipe_detail_intent_position">position</string>
     <string name="recipe_detail_intent_list_steps">list_steps</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_recently_viewed">RecentlyViewedActivity</string>
 
 </resources>

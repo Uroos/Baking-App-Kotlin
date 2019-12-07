@@ -18,17 +18,20 @@ import com.google.gson.Gson
 import android.support.v4.app.SupportActivity
 import android.support.v4.app.SupportActivity.ExtraData
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.home.mybakingappone.model.AppDatabase
 
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
     var recipe: Recipes2? = null
     var twoPane: Boolean = false
+    lateinit var appDb:AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
         //this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        appDb = AppDatabase.getsInstance(this)
 
         val linearLayoutCheck: LinearLayout? = findViewById(R.id.video_description_linear_layout)
         // Tablet is connected
@@ -59,6 +62,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .commit()
         } else {
             twoPane = false
+
             val recipeStepFragment = RecipeStepFragment2()
             val fragmentManager = supportFragmentManager
             if (savedInstanceState == null) {
@@ -72,8 +76,9 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                         fragmentManager.beginTransaction()
                                 .add(R.id.recipe_steps_container, recipeStepFragment)
                                 .commit()
-                        //Toast.makeText(this, "Recipe has extra: " + recipe!!.name, Toast.LENGTH_SHORT).show()
-
+                        val id = recipe!!.id
+                        val name = appDb.taskDao().getRecipe(id)
+                        //Toast.makeText(this, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
                     } else {
                         //Toast.makeText(this, "Recipe has no extra", Toast.LENGTH_SHORT).show()
                         finish()

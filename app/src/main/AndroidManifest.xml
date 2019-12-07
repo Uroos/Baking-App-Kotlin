@@ -13,24 +13,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.RecentlyViewedActivity"
+            android:label="@string/title_activity_recently_viewed"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:parentActivityName=".ui.Main2Activity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.home.mybakingappone.ui.Main2Activity" />
+        </activity>
+        <activity
             android:name=".ui.Main2Activity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.RecipeDetail2"
             android:label="Details"
-            android:theme="@style/RecipeStepTheme"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/RecipeStepTheme" />
         <activity
             android:name=".ui.RecipeStepDetail2"
             android:label="Recipe Steps"
-            android:theme="@style/RecipeStepDetailTheme"
-            android:parentActivityName=".ui.RecipeDetail2" />
+            android:parentActivityName=".ui.RecipeDetail2"
+            android:theme="@style/RecipeStepDetailTheme" />
 
         <service android:name=".RecipeUpdateService2" />
 
@@ -43,7 +57,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/recipe_widget_provider_info" />
         </receiver>
-
     </application>
 
 </manifest>

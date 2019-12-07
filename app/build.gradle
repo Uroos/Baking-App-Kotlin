@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-
+//enable anotation processing with kotlin, disabled by default
+kapt {
+    generateStubs = true
+}
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -28,8 +32,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    androidExtensions{
-        experimental=true
+    androidExtensions {
+        experimental = true
     }
 }
 
@@ -54,9 +58,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
     implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:common:$room_version"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

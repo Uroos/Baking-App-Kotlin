@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <FrameLayout
@@ -274,23 +275,10 @@
             android:textColor="@android:color/secondary_text_light"
             android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/tv_ingredients"
-            style="@style/Ingredients"
-            android:drawableLeft="@drawable/fire"
-            android:drawablePadding="@dimen/padding16"
-            android:drawableTint="@color/colorAccent"
-            tools:text="Ingredients will go here" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_ingredients"
+            style="@style/RecyclerViewSteps" />
 
-        <!--        <Button-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="56dp"-->
-        <!--            android:layout_marginHorizontal="16dp"-->
-        <!--            android:layout_marginTop="16dp"-->
-        <!--            android:layout_marginBottom="16dp"-->
-        <!--            android:textColor="@color/white"-->
-        <!--            android:backgroundTint="@color/colorPrimaryDark"-->
-        <!--            android:text="Add all to shopping list" />-->
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"

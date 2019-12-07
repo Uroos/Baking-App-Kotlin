@@ -47,7 +47,7 @@ fun parseRecipeJson(context: Context, myResponse: String): ArrayList<Recipes2>? 
                 servings = objectOfResult.optInt("servings", 0)
                 image = objectOfResult.optString("image", "")
 
-                recipes.add(Recipes2(id, name, ingredients, steps, servings, image))
+                //recipes.add(Recipes2(id, name, ingredients, steps, servings, image))
 
             }
         } catch (e: JSONException) {

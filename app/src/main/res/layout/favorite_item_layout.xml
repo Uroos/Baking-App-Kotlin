@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingTop="@dimen/margin4"
+    android:paddingBottom="@dimen/margin4"
+    xmlns:tools="http://schemas.android.com/tools">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tv_favorite_name"
+    tools:text="Recipe name"
+    android:textSize="24sp"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/padding16"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="4dp"
+                android:src="@drawable/baseline_schedule_white_24"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="3h 45 min"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="4dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
+                android:src="@drawable/fire"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="430 cal"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

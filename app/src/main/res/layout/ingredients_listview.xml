@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingStart="@dimen/padding16"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_remove"
+        android:paddingEnd="@dimen/padding16"
+        android:tint="@color/colorAccent"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="1 Cup Flour dkdkdkkd kddkkdkdkd dkkdkdk kdkdkdkd kdkdkdk dkdkdkkd dkdkdkkdkd dkkkkkd kkk"
+        android:maxLines="2"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_ingredient_name"/>
+</LinearLayout>
