@@ -22,7 +22,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource2
-import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.AppExecutor
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_LAYOUT
@@ -155,7 +155,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             if (isOnline(context2)) {
                 loadingIndicator.setVisibility(View.INVISIBLE);
                 savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT) as Parcelable
-                recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
+                recyclerView.getLayoutManager()!!.onRestoreInstanceState(savedRecyclerLayoutState)
             } else {
                 showErrorMessage()
             }
@@ -204,7 +204,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             recipes!!.get(3).image = R.drawable.cheese_cake.toString()
 
             // Saving to database
-            val db =AppDatabase.getsInstance(context2)
+            val db =AppDatabase2.getsInstance(context2)
             db.taskDao().insertRecipe(recipes!!.get(0))
             db.taskDao().insertRecipe(recipes!!.get(1))
             db.taskDao().insertRecipe(recipes!!.get(2))
@@ -220,7 +220,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             recipeAdapter!!.setRecipeData((recipes!!))
             recipeAdapter!!.notifyDataSetChanged()
             recyclerView.setAdapter(recipeAdapter)
-            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
+            recyclerView.getLayoutManager()!!.onRestoreInstanceState(savedRecyclerLayoutState)
             Log.v("MasterListFragment","recipe length is " + recipes!!.size)
             showRecipeData()
         } else {
@@ -244,7 +244,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         super.onSaveInstanceState(outState)
         outState.putSerializable("recipes", recipes as Serializable)
         if (isOnline(context2)) {
-            outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+            outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, recyclerView.getLayoutManager()!!.onSaveInstanceState());
         } else {
             showErrorMessage()
         }
@@ -255,7 +255,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         if (isOnline(context2)) {
             if (savedInstanceState != null) {
                 savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT)
-                recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState)
+                recyclerView.getLayoutManager()!!.onRestoreInstanceState(savedRecyclerLayoutState)
             }
         } else {
             showErrorMessage()

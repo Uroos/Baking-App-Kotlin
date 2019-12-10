@@ -11,8 +11,9 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
+import android.widget.Toast
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Recipes2
 
 
@@ -67,18 +68,14 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
             R.id.menu_favorite->{
                 val intent = Intent(this, FavoriteActivity::class.java)
                 startActivity(intent)
-                return true
             }
             R.id.menu_recently_viewed->{
                 val intent = Intent(this, RecentlyViewedActivity::class.java)
                 startActivity(intent)
-                return true
             }
             R.id.menu_privacy->{
-                return true
             }
             R.id.menu_about->{
-                return true
             }
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -87,7 +84,7 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
 
     override fun onImageSelected(recipe: Recipes2?) {
         // Save to recently viewed database
-        val db =AppDatabase.getsInstance(this)
+        val db =AppDatabase2.getsInstance(this)
         val recipeRecent= Recipes2(recipe!!.id,
                 recipe!!.name,
                 recipe!!.ingredients,

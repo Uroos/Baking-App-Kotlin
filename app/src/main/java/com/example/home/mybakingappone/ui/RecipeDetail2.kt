@@ -2,51 +2,55 @@ package com.example.home.mybakingappone.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.NavUtils
 import android.support.v4.app.TaskStackBuilder
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.home.mybakingappone.R
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
-import timber.log.Timber
 import com.google.gson.Gson
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.example.home.mybakingappone.model.AppDatabase
+import timber.log.Timber
 
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
 
     var recipe: Recipes2? = null
     var twoPane: Boolean = false
-    lateinit var appDb:AppDatabase
+    lateinit var appDb: AppDatabase2
+    var allRecipes:ArrayList<Recipes2>? = null
+    var linearLayoutCheck: LinearLayout? = null
+    var currentIdForSentRecipe: Int = 0
+    var tabLayout: TabLayout? = null
+    var viewPager: ViewPager? = null
+    var sizeOfDatabase:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
         //this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        appDb = AppDatabase.getsInstance(this)
+        initViews()
 
-        val linearLayoutCheck: LinearLayout? = findViewById(R.id.video_description_linear_layout)
         // Tablet is connected
         if (linearLayoutCheck != null) {
             twoPane = true
             if (intent != null) {
                 var bundle: Bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
-                 recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
-               // Toast.makeText(this, "recipe number is=" + recipe!!.name, Toast.LENGTH_SHORT).show()
+                recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
+                // Toast.makeText(this, "recipe number is=" + recipe!!.name, Toast.LENGTH_SHORT).show()
             }
             val fragmentManager = supportFragmentManager
             // Inflate all three fragments that will be displayed in this activity
 
-            val recipeStepFragment = RecipeStepFragment2()
-            recipeStepFragment.setRecipe(recipe!!)
+            val recipeStepFragment: RecipeStepFragment2 = RecipeStepFragment2.newInstance(recipe!!)
+            //recipeStepFragment.setRecipe(recipe!!)
             fragmentManager.beginTransaction()
                     .add(R.id.recipe_steps_container, recipeStepFragment)
                     .commit()
@@ -56,15 +60,18 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .add(R.id.video_container, videoFragment)
                     .commit()
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription("","",0)
+            recipeStepDescriptionFragment.setDescription("", "", 0)
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
         } else {
             twoPane = false
+//            tabLayout!!.visibility= View.VISIBLE
+            viewPager!!.visibility = View.VISIBLE
+            setupViewPager()
 
-            val recipeStepFragment = RecipeStepFragment2()
-            val fragmentManager = supportFragmentManager
+            //val recipeStepFragment = RecipeStepFragment2()
+            //val fragmentManager = supportFragmentManager
             if (savedInstanceState == null) {
                 Timber.v("savedinstance is null")
                 if (intent != null) {
@@ -72,13 +79,9 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     if (intent.hasExtra(getString(R.string.intent_extra_bundle))) {
                         var bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
                         recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
-                        recipeStepFragment.setRecipe(recipe!!)
-                        fragmentManager.beginTransaction()
-                                .add(R.id.recipe_steps_container, recipeStepFragment)
-                                .commit()
-                        val id = recipe!!.id
-                        val name = appDb.taskDao().getRecipe(id)
-                        //Toast.makeText(this, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
+                        currentIdForSentRecipe = recipe!!.id
+                        viewPager!!.setCurrentItem(currentIdForSentRecipe-1,true)
+
                     } else {
                         //Toast.makeText(this, "Recipe has no extra", Toast.LENGTH_SHORT).show()
                         finish()
@@ -89,22 +92,49 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
             }
         }
     }
+    private fun setupViewPager() {
 
+        val adapter = MyViewPagerAdapter(supportFragmentManager)
+        var fragmentList:ArrayList<RecipeStepFragment2> = ArrayList()
+        val recipeStepFragment = RecipeStepFragment2()
+
+        (0 until sizeOfDatabase).forEach { i ->
+//            val recipeStepFragment = RecipeStepFragment2()
+//            recipeStepFragment.setRecipe(allRecipes!![i])
+//            Log.v("RecipeDetail2","adding " + allRecipes!![i].name)
+            var firstFragmet: RecipeStepFragment2 = RecipeStepFragment2.newInstance(allRecipes!![i])
+
+            fragmentList.add(firstFragmet)
+        }
+        adapter.addFragmentList(fragmentList)
+
+        viewPager!!.adapter = adapter
+        //tabLayout!!.setupWithViewPager(viewPager)
+
+    }
+    private fun initViews() {
+        appDb = AppDatabase2.getsInstance(this)
+        allRecipes = appDb.taskDao().loadAllRecipes() as ArrayList<Recipes2>?
+        sizeOfDatabase = allRecipes!!.size
+        linearLayoutCheck= findViewById(R.id.video_description_linear_layout)
+        //tabLayout = findViewById(R.id.tabs)
+        viewPager=findViewById(R.id.view_pager)
+    }
     override fun onSaveInstanceState(outState: Bundle?) {
         Timber.v("saving recipe before exiting")
         super.onSaveInstanceState(outState)
     }
 
-    override fun onStepSelected(description: String,shortDescription:String, videoUrl: String?,position:Int, steps: List<Steps2>) {
+    override fun onStepSelected(description: String, shortDescription: String, videoUrl: String?, position: Int, steps: List<Steps2>) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
             val intent = Intent(this, RecipeStepDetail2::class.java)
             intent.putExtra(getString(R.string.recipe_detail_intent_description), description)
             intent.putExtra(getString(R.string.recipe_detail_intent_url), videoUrl)
-            intent.putExtra(getString(R.string.recipe_detail_intent_short_description),shortDescription)
-            intent.putExtra(getString(R.string.recipe_detail_intent_position),position)
-            val json=Gson().toJson(steps)
-            intent.putExtra(getString(R.string.recipe_detail_intent_list_steps),json)
+            intent.putExtra(getString(R.string.recipe_detail_intent_short_description), shortDescription)
+            intent.putExtra(getString(R.string.recipe_detail_intent_position), position)
+            val json = Gson().toJson(steps)
+            intent.putExtra(getString(R.string.recipe_detail_intent_list_steps), json)
             startActivity(intent)
         } else {
             val fragmentManager = supportFragmentManager
@@ -116,7 +146,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .commit()
 
             val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription(description,shortDescription,position)
+            recipeStepDescriptionFragment.setDescription(description, shortDescription, position)
             fragmentManager.beginTransaction()
                     .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()

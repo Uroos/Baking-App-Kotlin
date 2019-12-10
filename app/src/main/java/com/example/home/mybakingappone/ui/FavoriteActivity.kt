@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 
@@ -19,14 +19,14 @@ class FavoriteActivity : AppCompatActivity() {
     private var favRecipes: List<Recipes2> = ArrayList()
     private var linearLayoutManagerFavorite: LinearLayoutManager? = null
     private var favoriteAdapter: FavoriteAdapter? = null
-    private lateinit var db : AppDatabase
+    private lateinit var db : AppDatabase2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
         setSupportActionBar(toolbar)
 
-        db = AppDatabase.getsInstance(this)
+        db = AppDatabase2.getsInstance(this)
 
         favRecipes=db.taskDao().loadFavoriteRecipes()
         linearLayoutManagerFavorite = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

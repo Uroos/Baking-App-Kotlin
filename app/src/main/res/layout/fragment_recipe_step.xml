@@ -23,12 +23,13 @@
                 android:id="@+id/fab_like"
                 style="@style/FloatingActionButton"
                 android:layout_gravity="right"
+
                 android:src="@drawable/baseline_favorite_white_36" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_arrow"
                 style="@style/FloatingActionButton"
-                android:src="@drawable/baseline_arrow_back_ios_white_48" />
+                android:src="@drawable/baseline_chevron_left_white_48" />
 
             <FrameLayout
                 android:id="@+id/photo_container"
@@ -47,8 +48,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/scrim" />
             </FrameLayout>
-
-            <!--            style="@style/RecipeName"-->
 
             <TextView
                 android:id="@+id/tv_recipe_name"

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +17,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.RecipeUpdateService2
-import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Ingredients2
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
-import com.example.home.mybakingappone.ui.RecipeStepFragment2.RecipeClass.recipe
 import com.squareup.picasso.Picasso
 import kotlinx.serialization.ImplicitReflectionSerializer
 import timber.log.Timber
@@ -44,18 +44,26 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
 
     var ingredients: String = ""
 
-    private var steps: List<Steps2> = ArrayList()
+    private var steps: ArrayList<Steps2> = ArrayList()
     private var ingredientsList: ArrayList<Ingredients2> = ArrayList()
     private var recipeStepListAdapter: RecipeStepListAdapter2? = null
     private var ingredientAdapter: IngredientAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var linearLayoutManagerIngredients: LinearLayoutManager? = null
-
-    object RecipeClass {
-        @JvmStatic
-        var recipe: Recipes2? = null
+    var recipe: Recipes2? = null
+//    object RecipeClass {
+//        @JvmStatic
+//        var recipe: Recipes2? = null
+//    }
+    companion object {
+        fun newInstance(recipe: Recipes2): RecipeStepFragment2 {
+            val f = RecipeStepFragment2()
+            val bundle = Bundle(1)
+            bundle.putSerializable("recipe", recipe)
+            f.arguments = bundle
+            return f
+        }
     }
-
     // Method in interface to handle recycler view clicks. Calls onStepSelected implemented in RecipeDetail2
     override fun onStepClick(step: Steps2, position: Int, steps: List<Steps2>) {
         var tempVideoUrl = step.videoURL
@@ -97,15 +105,18 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         // Inflate the RecipeStepFragment layout
         if (savedInstanceState == null) {
             Timber.v("savedinstancestate is null. trying to get stored recipe")
+            //val message = arguments!!.getString(EXTRA_MESSAGE)
+            recipe=arguments!!.getSerializable("recipe") as Recipes2
+            Log.v("RecipeFragment2","recipe name received " + recipe!!.name)
             steps = recipe!!.steps!!
             ingredientsList = recipe!!.ingredients!!
         } else {
             recipe = savedInstanceState.getSerializable("recipe") as Recipes2
             steps = recipe!!.steps!!
             ingredientsList = recipe!!.ingredients!!
-        }//ingredientAdapter
+        }
 
-        val db = AppDatabase.getsInstance(activity)
+        val db = AppDatabase2.getsInstance(activity)
 
         textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
         imageViewRecipe = rootView.findViewById(R.id.iv_recipe)
@@ -176,9 +187,9 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         //outState.putParcelable(BUNDLE_STEPS_RECYCLER_LAYOUT, recyclerViewSteps.getLayoutManager().onSaveInstanceState());
     }
 
-    fun setRecipe(recipe: Recipes2) {
-        RecipeClass.recipe = recipe
-    }
+//    fun setRecipe(recipe: Recipes2) {
+//        RecipeClass.recipe = recipe
+//    }
 
 }
 

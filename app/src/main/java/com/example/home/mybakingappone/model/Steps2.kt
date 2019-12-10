@@ -1,7 +1,5 @@
 package com.example.home.mybakingappone.model
 
-import kotlinx.serialization.Serializable
-
 data class Steps2(val id: Int,
                   val shortDescription: String,
                   val description: String,

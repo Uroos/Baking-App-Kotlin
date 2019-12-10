@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.example.home.mybakingappone.R
-import com.example.home.mybakingappone.model.AppDatabase
+import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Recipes2
 
 import kotlinx.android.synthetic.main.activity_recently_viewed.*
@@ -16,14 +16,14 @@ class RecentlyViewedActivity : AppCompatActivity() {
     private var recentRecipes: List<Recipes2> = ArrayList()
     private var linearLayoutManagerRecentlyViewed: LinearLayoutManager? = null
     private var favoriteAdapter: FavoriteAdapter? = null
-    private lateinit var db : AppDatabase
+    private lateinit var db : AppDatabase2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
         setSupportActionBar(toolbar)
 
-        db = AppDatabase.getsInstance(this)
+        db = AppDatabase2.getsInstance(this)
 
         recentRecipes=db.taskDao().loadRecentRecipes()
         linearLayoutManagerRecentlyViewed = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
