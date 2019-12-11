@@ -18,6 +18,7 @@ import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.google.gson.Gson
 import timber.log.Timber
+import java.io.Serializable
 
 
 class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListener {
@@ -41,26 +42,28 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         // Tablet is connected
         if (linearLayoutCheck != null) {
             twoPane = true
+            viewPager!!.visibility = View.GONE
+
             if (intent != null) {
                 var bundle: Bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
                 recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                 // Toast.makeText(this, "recipe number is=" + recipe!!.name, Toast.LENGTH_SHORT).show()
             }
             val fragmentManager = supportFragmentManager
-            // Inflate all three fragments that will be displayed in this activity
 
+            // Inflate all three fragments that will be displayed in this activity
             val recipeStepFragment: RecipeStepFragment2 = RecipeStepFragment2.newInstance(recipe!!)
-            //recipeStepFragment.setRecipe(recipe!!)
             fragmentManager.beginTransaction()
                     .add(R.id.recipe_steps_container, recipeStepFragment)
                     .commit()
+
             val videoFragment = VideoFragment2()
             videoFragment.setUrlToDisplay1("")
             fragmentManager.beginTransaction()
                     .add(R.id.video_container, videoFragment)
                     .commit()
-            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription("", "", 0)
+
+            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2.newInstance("", "", 0)
             fragmentManager.beginTransaction()
                     .add(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
@@ -76,6 +79,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                 Timber.v("savedinstance is null")
                 if (intent != null) {
                     //After click in main activity, it sends a recipe object in intent.
+                    //We want to get id from it so we can load the clicked recipe in the viewpager
                     if (intent.hasExtra(getString(R.string.intent_extra_bundle))) {
                         var bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
                         recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
@@ -84,34 +88,13 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
 
                     } else {
                         //Toast.makeText(this, "Recipe has no extra", Toast.LENGTH_SHORT).show()
-                        finish()
+                        //finish()
                     }
-                } else {
-                    //finish();
                 }
             }
         }
     }
-    private fun setupViewPager() {
 
-        val adapter = MyViewPagerAdapter(supportFragmentManager)
-        var fragmentList:ArrayList<RecipeStepFragment2> = ArrayList()
-        val recipeStepFragment = RecipeStepFragment2()
-
-        (0 until sizeOfDatabase).forEach { i ->
-//            val recipeStepFragment = RecipeStepFragment2()
-//            recipeStepFragment.setRecipe(allRecipes!![i])
-//            Log.v("RecipeDetail2","adding " + allRecipes!![i].name)
-            var firstFragmet: RecipeStepFragment2 = RecipeStepFragment2.newInstance(allRecipes!![i])
-
-            fragmentList.add(firstFragmet)
-        }
-        adapter.addFragmentList(fragmentList)
-
-        viewPager!!.adapter = adapter
-        //tabLayout!!.setupWithViewPager(viewPager)
-
-    }
     private fun initViews() {
         appDb = AppDatabase2.getsInstance(this)
         allRecipes = appDb.taskDao().loadAllRecipes() as ArrayList<Recipes2>?
@@ -122,6 +105,7 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
     }
     override fun onSaveInstanceState(outState: Bundle?) {
         Timber.v("saving recipe before exiting")
+        outState!!.putSerializable("recipes", allRecipes as Serializable)
         super.onSaveInstanceState(outState)
     }
 
@@ -145,14 +129,26 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                     .replace(R.id.video_container, videoFragment)
                     .commit()
 
-            val recipeStepDescriptionFragment = RecipesStepDescriptionFragment2()
-            recipeStepDescriptionFragment.setDescription(description, shortDescription, position)
+            val recipeStepDescriptionFragment:RecipesStepDescriptionFragment2 = RecipesStepDescriptionFragment2.newInstance(description,shortDescription,position)
             fragmentManager.beginTransaction()
                     .replace(R.id.step_instruction_container, recipeStepDescriptionFragment)
                     .commit()
         }
     }
+    private fun setupViewPager() {
+        val adapter = MyViewPagerAdapter(supportFragmentManager)
+        var fragmentList:ArrayList<RecipeStepFragment2> = ArrayList()
 
+        //Creating instances of all the fragments viewpager will display and storing in a list
+        (0 until sizeOfDatabase).forEach { i ->
+            var firstFragmet: RecipeStepFragment2 = RecipeStepFragment2.newInstance(allRecipes!![i])
+            fragmentList.add(firstFragmet)
+        }
+        adapter.addFragmentList(fragmentList)
+
+        viewPager!!.adapter = adapter
+        //tabLayout!!.setupWithViewPager(viewPager)
+    }
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             // Respond to the action bar's Up/Home button

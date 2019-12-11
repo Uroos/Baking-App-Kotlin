@@ -37,7 +37,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
     lateinit var fabLike: FloatingActionButton
     lateinit var fabArrow: FloatingActionButton
     lateinit var imageViewRecipe: ImageView
-
+    lateinit var db:AppDatabase2
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
 
     private lateinit var callback: OnStepClickListener
@@ -51,10 +51,7 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
     private var linearLayoutManager: LinearLayoutManager? = null
     private var linearLayoutManagerIngredients: LinearLayoutManager? = null
     var recipe: Recipes2? = null
-//    object RecipeClass {
-//        @JvmStatic
-//        var recipe: Recipes2? = null
-//    }
+
     companion object {
         fun newInstance(recipe: Recipes2): RecipeStepFragment2 {
             val f = RecipeStepFragment2()
@@ -105,7 +102,6 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         // Inflate the RecipeStepFragment layout
         if (savedInstanceState == null) {
             Timber.v("savedinstancestate is null. trying to get stored recipe")
-            //val message = arguments!!.getString(EXTRA_MESSAGE)
             recipe=arguments!!.getSerializable("recipe") as Recipes2
             Log.v("RecipeFragment2","recipe name received " + recipe!!.name)
             steps = recipe!!.steps!!
@@ -116,21 +112,14 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
             ingredientsList = recipe!!.ingredients!!
         }
 
-        val db = AppDatabase2.getsInstance(activity)
+        initViews(rootView,activity)
 
-        textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
-        imageViewRecipe = rootView.findViewById(R.id.iv_recipe)
-        fabLike = rootView.findViewById(R.id.fab_like)
-        fabArrow = rootView.findViewById(R.id.fab_arrow)
-
-        recyclerViewSteps = rootView.findViewById(R.id.rv_recipe_step)
         linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerViewSteps.setLayoutManager(linearLayoutManager)
         recyclerViewSteps.setHasFixedSize(true)
         recipeStepListAdapter = RecipeStepListAdapter2(activity, steps, this)
         recyclerViewSteps.setAdapter(recipeStepListAdapter)
 
-        recyclerViewIngredients = rootView.findViewById(R.id.rv_ingredients)
         linearLayoutManagerIngredients = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerViewIngredients.setLayoutManager(linearLayoutManagerIngredients)
         recyclerViewIngredients.setHasFixedSize(true)
@@ -161,6 +150,16 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         return rootView;
     }
 
+    private fun initViews(rootView:View,activity:Context) {
+        textViewRecipeName = rootView.findViewById(R.id.tv_recipe_name)
+        imageViewRecipe = rootView.findViewById(R.id.iv_recipe)
+        fabLike = rootView.findViewById(R.id.fab_like)
+        fabArrow = rootView.findViewById(R.id.fab_arrow)
+        db = AppDatabase2.getsInstance(activity)
+        recyclerViewIngredients = rootView.findViewById(R.id.rv_ingredients)
+        recyclerViewSteps = rootView.findViewById(R.id.rv_recipe_step)
+    }
+
     fun arrangeIngredientList(ingredientsList: ArrayList<Ingredients2>): String {
         var stringBuilder = StringBuilder()
         var result = ""
@@ -181,15 +180,10 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         return result
     }
 
-    override fun onSaveInstanceState(@NonNull outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putSerializable("recipe", recipe)
         //outState.putParcelable(BUNDLE_STEPS_RECYCLER_LAYOUT, recyclerViewSteps.getLayoutManager().onSaveInstanceState());
     }
-
-//    fun setRecipe(recipe: Recipes2) {
-//        RecipeClass.recipe = recipe
-//    }
-
 }
 
