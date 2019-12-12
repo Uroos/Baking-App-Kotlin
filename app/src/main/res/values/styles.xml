@@ -3,15 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Following three lines result in transparent status bar and image extends till top. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="drawerArrowStyle">@style/DrawerIcon</item>
-
     </style>
 
     <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">

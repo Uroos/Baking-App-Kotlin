@@ -12,18 +12,18 @@ import android.support.annotation.NonNull
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
 import android.support.v4.app.Fragment
-import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.SimpleIdlingResource2
 import com.example.home.mybakingappone.model.AppDatabase2
-import com.example.home.mybakingappone.model.AppExecutor
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.BUNDLE_RECYCLER_LAYOUT
 import com.example.home.mybakingappone.onlinecheck.GeneralUrls.RECIPES_URL
@@ -44,7 +44,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
 
     private var onLineIntentFilter: IntentFilter? = null
     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
-    private var connectedAlready:Boolean=false
+    private var connectedAlready: Boolean = false
 
     private var recipes: ArrayList<Recipes2>? = ArrayList()
     private var recipeAdapter: MasterListAdapter2? = null
@@ -109,12 +109,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
         // gotten from raywenderlick fragment tutorial with dogs list
         val activity = activity as Context
 
-        // Accessing room database
-        //appDb = AppDatabase.getsInstance(activity)
-        //val name = appDb.taskDao().getRecipe(0).name
-        //Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
-
-        frameLayout = rootView.findViewById(R.id.framelayout_header_main_page)
         recyclerView = rootView.findViewById(R.id.rv_recipes)
         errorMessageDisplay = rootView.findViewById(R.id.tv_error_message_display)
         loadingIndicator = rootView.findViewById(R.id.pb_loading_indicator)
@@ -135,13 +129,6 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
                 layoutManager = GridLayoutManager(activity, 1)
             } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 layoutManager = GridLayoutManager(activity, 2)
-                //.setLayoutParams(new LinearLayout.LayoutParams(100,100);
-                val lp: LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-                frameLayout!!.setLayoutParams(lp)
-                val textViewGreeting = frameLayout!!.findViewById<TextView>(R.id.tv_greeting)
-                textViewGreeting.visibility = View.INVISIBLE
-                val textViewBelowGreeting = frameLayout!!.findViewById<TextView>(R.id.tv_below_greeting)
-                textViewBelowGreeting.visibility = View.INVISIBLE
             }
         }
 
@@ -204,15 +191,15 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             recipes!!.get(3).image = R.drawable.cheese_cake.toString()
 
             // Saving to database
-            val db =AppDatabase2.getsInstance(context2)
+            val db = AppDatabase2.getsInstance(context2)
             db.taskDao().insertRecipe(recipes!!.get(0))
             db.taskDao().insertRecipe(recipes!!.get(1))
             db.taskDao().insertRecipe(recipes!!.get(2))
             db.taskDao().insertRecipe(recipes!!.get(3))
 
             //  AppExecutor.getInstance().diskIO().execute(Runnable {
-               // val name = appDb.taskDao().getRecipe(id.toLong())
-               // Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
+            // val name = appDb.taskDao().getRecipe(id.toLong())
+            // Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
             //})
             //val name = appDb.taskDao().getRecipe(0).name
             //Toast.makeText(activity, "Loaded from room. Recipe name is: "+name,Toast.LENGTH_SHORT).show()
@@ -221,7 +208,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
             recipeAdapter!!.notifyDataSetChanged()
             recyclerView.setAdapter(recipeAdapter)
             recyclerView.getLayoutManager()!!.onRestoreInstanceState(savedRecyclerLayoutState)
-            Log.v("MasterListFragment","recipe length is " + recipes!!.size)
+            Log.v("MasterListFragment", "recipe length is " + recipes!!.size)
             showRecipeData()
         } else {
             showErrorMessage()
@@ -265,10 +252,10 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     val OnLineBroadCastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             //Toast.makeText(context,"receiving",Toast.LENGTH_LONG).show()
-            if(!connectedAlready&&(isOnline(context2))){
+            if (!connectedAlready && (isOnline(context2))) {
                 setupData()
             }
-            connectedAlready= isOnline(context2)
+            connectedAlready = isOnline(context2)
         }
     }
 }
