@@ -109,10 +109,13 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
         super.onSaveInstanceState(outState)
     }
 
-    override fun onStepSelected(description: String, shortDescription: String, videoUrl: String?, position: Int, steps: List<Steps2>) {
+    override fun onStepSelected(description: String, shortDescription: String, videoUrl: String?, position: Int, steps: List<Steps2>,recipe:Recipes2) {
         // If twoPane is not inflated then send intent, else inflate video and description fragments and send data
         if (!twoPane) {
             val intent = Intent(this, RecipeStepDetail2::class.java)
+            var bundle = Bundle()
+            bundle.putSerializable(getString(R.string.main_activity_bundle_recipe), recipe)
+            intent.putExtra(getString(R.string.intent_extra_bundle), bundle)
             intent.putExtra(getString(R.string.recipe_detail_intent_description), description)
             intent.putExtra(getString(R.string.recipe_detail_intent_url), videoUrl)
             intent.putExtra(getString(R.string.recipe_detail_intent_short_description), shortDescription)

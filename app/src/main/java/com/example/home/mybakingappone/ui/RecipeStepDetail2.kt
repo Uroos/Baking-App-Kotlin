@@ -19,6 +19,7 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.PersistableBundle
 import android.support.v4.app.FragmentManager
 import android.util.Log
+import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 
 
@@ -26,8 +27,10 @@ class RecipeStepDetail2 : AppCompatActivity() {
     var description: String = ""
     var shortDescription: String = ""
     var videourl: String? = null
-    var position:Int = 0
+    var position:Int = 0    // Position of the clicked step
     var steps:ArrayList<Steps2>?=null
+    var recipe:Recipes2=Recipes2()
+
     var i:Int=0
     lateinit var fragmentManager :FragmentManager
     lateinit var videoFragment:VideoFragment2
@@ -46,6 +49,8 @@ class RecipeStepDetail2 : AppCompatActivity() {
 
         //Restore the fragment's instance
             if (intent != null) {
+                var bundle: Bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
+                recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                 description = intent.getStringExtra(getString(R.string.recipe_detail_intent_description))
                 shortDescription = intent.getStringExtra(getString(R.string.recipe_detail_intent_short_description))
                 videourl = intent.getStringExtra(getString(R.string.recipe_detail_intent_url))
@@ -55,7 +60,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
                 val token = object : TypeToken<ArrayList<Steps2>>() {}
                 steps = Gson().fromJson<ArrayList<Steps2>>(json, token.type)
                 intent = null
-                //Toast.makeText(this, "position is " + position + " and steps size is: " + steps!!.size, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "recipe name is: "+ recipe.name, Toast.LENGTH_SHORT).show()
             }
         if(savedInstanceState==null) {
             //If I don't put this in this if block then new fragment is created at every rotation resulting in playback position reset to 0.

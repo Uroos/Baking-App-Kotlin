@@ -75,12 +75,12 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         } else {
             urlToSend = tempVideoUrl;
         }
-        callback.onStepSelected(step.description, step.shortDescription, urlToSend, position, steps);
+        callback.onStepSelected(step.description, step.shortDescription, urlToSend, position, steps, recipe!!);
     }
 
     // OnImageClickListener interface, calls a method in the host activity named onImageSelected
     interface OnStepClickListener {
-        fun onStepSelected(description: String, shortDescription: String, videoUrl: String?, position: Int, steps: List<Steps2>)
+        fun onStepSelected(description: String, shortDescription: String, videoUrl: String?, position: Int, steps: List<Steps2>,recipe: Recipes2)
     }
 
     // Override onAttach to make sure that the container activity has implemented the callback

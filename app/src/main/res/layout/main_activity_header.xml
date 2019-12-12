@@ -21,6 +21,7 @@
             android:background="@drawable/scrim" />
     </FrameLayout>
 
+    <!--android:paddingTop="?android:attr/actionBarSize"-->
     <TextView
         android:id="@+id/tv_home"
         android:layout_width="match_parent"

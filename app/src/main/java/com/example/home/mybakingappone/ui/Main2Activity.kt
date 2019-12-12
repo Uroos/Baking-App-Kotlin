@@ -48,7 +48,7 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
 
-        // Calculate ActionBar height
+        // Calculate ActionBar height to have the text aligned center_vertically with the icon
         val tv = TypedValue()
         var actionBarHeight=0
         if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
@@ -57,6 +57,7 @@ class Main2Activity : AppCompatActivity(), MasterListFragment2.OnImageClickListe
         actionBarHeight /= 2
         val tv_home: TextView =findViewById(R.id.tv_home)
         tv_home.setPadding(0,actionBarHeight,0,0)
+
         drawer = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
