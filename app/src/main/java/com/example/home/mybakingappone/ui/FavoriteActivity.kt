@@ -7,10 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
+import android.support.v7.widget.Toolbar
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.AppDatabase2
 import com.example.home.mybakingappone.model.Recipes2
-import com.example.home.mybakingappone.model.Steps2
 
 import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.android.synthetic.main.content_favorite.*
@@ -24,7 +24,10 @@ class FavoriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
+
+        val toolbar:Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         db = AppDatabase2.getsInstance(this)
 
@@ -45,16 +48,5 @@ class FavoriteActivity : AppCompatActivity() {
                         Toast.makeText(this, "Recipes deleted!",Toast.LENGTH_SHORT).show()
                     }.show()
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
-//    class DeleteListener : View.OnClickListener {
-//
-//        override fun onClick(v: View) {
-//            // Code to delete recipes from database
-//            val db = AppDatabase.getsInstance(v.context)
-//            db.taskDao().deleteAll()
-//            Toast.makeText(v.context, "Recipes deleted!",Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
 }

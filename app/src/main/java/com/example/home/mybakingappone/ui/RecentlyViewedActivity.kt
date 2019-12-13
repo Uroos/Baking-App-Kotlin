@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.AppDatabase2
@@ -21,7 +22,10 @@ class RecentlyViewedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         db = AppDatabase2.getsInstance(this)
 
@@ -43,5 +47,4 @@ class RecentlyViewedActivity : AppCompatActivity() {
                     }.show()
         }
     }
-
 }

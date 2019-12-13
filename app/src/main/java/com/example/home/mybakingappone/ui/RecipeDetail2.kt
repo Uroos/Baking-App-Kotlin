@@ -73,8 +73,6 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
             viewPager!!.visibility = View.VISIBLE
             setupViewPager()
 
-            //val recipeStepFragment = RecipeStepFragment2()
-            //val fragmentManager = supportFragmentManager
             if (savedInstanceState == null) {
                 Timber.v("savedinstance is null")
                 if (intent != null) {
@@ -84,11 +82,8 @@ class RecipeDetail2 : AppCompatActivity(), RecipeStepFragment2.OnStepClickListen
                         var bundle = intent.getBundleExtra(getString(R.string.intent_extra_bundle))
                         recipe = bundle.getSerializable(getString(R.string.main_activity_bundle_recipe)) as Recipes2
                         currentIdForSentRecipe = recipe!!.id
-                        viewPager!!.setCurrentItem(currentIdForSentRecipe-1,true)
+                        viewPager!!.setCurrentItem(currentIdForSentRecipe-1,true) // If 1st recipe then current item is on 0
 
-                    } else {
-                        //Toast.makeText(this, "Recipe has no extra", Toast.LENGTH_SHORT).show()
-                        //finish()
                     }
                 }
             }

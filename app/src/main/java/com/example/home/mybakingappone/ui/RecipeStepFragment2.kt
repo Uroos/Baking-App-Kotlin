@@ -101,7 +101,6 @@ class RecipeStepFragment2 : Fragment(), RecipeStepListAdapter2.RecipeStepListAda
         val activity = activity as Context
         // Inflate the RecipeStepFragment layout
         if (savedInstanceState == null) {
-            Timber.v("savedinstancestate is null. trying to get stored recipe")
             recipe=arguments!!.getSerializable("recipe") as Recipes2
             Log.v("RecipeFragment2","recipe name received " + recipe!!.name)
             steps = recipe!!.steps!!

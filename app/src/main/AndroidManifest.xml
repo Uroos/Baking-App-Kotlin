@@ -15,7 +15,11 @@
         <activity
             android:name=".ui.RecentlyViewedActivity"
             android:label="@string/title_activity_recently_viewed"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.home.mybakingappone.ui.Main2Activity" />
+        </activity>
         <activity
             android:name=".ui.FavoriteActivity"
             android:label="@string/title_activity_favorite"

@@ -40,7 +40,7 @@ android {
 dependencies {
     def room_version = "1.1.1"
     def lifecycle_version = "1.1.1"
-    def latest_version="28.0.0"
+    def latest_version = "28.0.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:support-compat:$latest_version"
@@ -54,6 +54,7 @@ dependencies {
     implementation "com.android.support:preference-v7:$latest_version"
 
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support:support-v4:28.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
