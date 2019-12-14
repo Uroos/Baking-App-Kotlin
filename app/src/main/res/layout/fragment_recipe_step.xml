@@ -23,8 +23,7 @@
                 android:id="@+id/fab_like"
                 style="@style/FloatingActionButton"
                 android:layout_gravity="right"
-
-                android:src="@drawable/baseline_favorite_white_36" />
+                android:src="@drawable/baseline_favorite_white_24" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_arrow"
@@ -206,7 +205,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:text="Proteins"
-
                     android:textColor="@android:color/secondary_text_dark"
                     android:textSize="16sp"
                     tools:text="Proteins" />
@@ -272,7 +270,7 @@
             android:paddingStart="@dimen/padding16"
             android:text="Ingredients"
             android:textColor="@android:color/secondary_text_light"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_ingredients"

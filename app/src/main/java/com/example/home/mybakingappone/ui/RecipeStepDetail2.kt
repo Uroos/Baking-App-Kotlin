@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentManager
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
@@ -19,7 +20,11 @@ import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.TextView
 
 class RecipeStepDetail2 : AppCompatActivity() {
     private var description: String = ""
@@ -29,7 +34,8 @@ class RecipeStepDetail2 : AppCompatActivity() {
     private var steps: ArrayList<Steps2>? = null
     private var recipe: Recipes2 = Recipes2()
     private var viewPager: ViewPager? = null
-
+    private var tabLayout: TabLayout?=null
+    private val toolbar: Toolbar? = null
     var i: Int = 0
     var viewPagerNumber:Int = 0
     lateinit var fragmentManager: FragmentManager
@@ -38,9 +44,14 @@ class RecipeStepDetail2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_step_detail_viewpager)
 
-        viewPager = findViewById(R.id.view_pager_recipe_step_detail)
-        fragmentManager = supportFragmentManager
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.visibility = View.GONE
 
+        viewPager = findViewById(R.id.view_pager_recipe_step_detail)
+        tabLayout = findViewById(R.id.tabs)
+        tabLayout!!.setupWithViewPager(viewPager)
+
+        fragmentManager = supportFragmentManager
         //If version is greater than 23 then it will turn status bar to white with grey icons else
         // status bar will be colorPrimaryDark
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -60,8 +71,6 @@ class RecipeStepDetail2 : AppCompatActivity() {
             val json = intent.getStringExtra(getString(R.string.recipe_detail_intent_list_steps))
             val token = object : TypeToken<ArrayList<Steps2>>() {}
             steps = Gson().fromJson<ArrayList<Steps2>>(json, token.type)
-            //intent = null
-            //Toast.makeText(this, "recipe name is: " + recipe.name, Toast.LENGTH_SHORT).show()
         }
             setupViewPager()
             viewPager!!.setCurrentItem(position,true)
@@ -72,7 +81,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
            // Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
 
             // Only set the toolbar when in portrait mode.
-            val toolbar: Toolbar = findViewById(R.id.toolbar)
+            toolbar.visibility = View.VISIBLE
             setSupportActionBar(toolbar)
             this.supportActionBar!!.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             val inflater: LayoutInflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -85,24 +94,8 @@ class RecipeStepDetail2 : AppCompatActivity() {
             this.supportActionBar!!.setDisplayShowTitleEnabled(true)
             this.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-            viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-                override fun onPageScrollStateChanged(state: Int) {
-                }
-
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    viewPagerNumber = position
-                }
-
-                override fun onPageSelected(position: Int) {
-                    viewPagerNumber = position
-                    i = viewPagerNumber
-                    //Toast.makeText(this@RecipeStepDetail2, "view pager number is: " + viewPagerNumber, Toast.LENGTH_SHORT).show()
-                }
-            })
             next.setOnClickListener() {
                 i += 1
-
                 if (i < steps!!.size) {
                     viewPager!!.setCurrentItem(i,true)
 
@@ -128,6 +121,36 @@ class RecipeStepDetail2 : AppCompatActivity() {
         adapter.addFragmentList(fragmentListSteps)
 
         viewPager!!.adapter = adapter
+
+        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                viewPagerNumber = position
+            }
+
+            override fun onPageSelected(position: Int) {
+                viewPagerNumber = position
+                i = viewPagerNumber
+                //Toast.makeText(this@RecipeStepDetail2, "view pager number is: " + viewPagerNumber, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        for (i in 0 until tabLayout!!.tabCount) {
+            Log.v("RecipeStepdetail", "size of tabs is "+tabLayout!!.tabCount)
+            val tab = tabLayout!!.getTabAt(i)
+            tab!!.setCustomView(getTabView(i))
+        }
+    }
+
+    fun getTabView(position: Int): View {
+        // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        val v = LayoutInflater.from(this).inflate(R.layout.custom_tab, null)
+        val tv = v.findViewById(R.id.tv_number) as TextView
+        tv.setText(position.toString())
+        return v
     }
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         outState!!.putString("url", videourl)

@@ -134,7 +134,7 @@
         <item name="android:layout_marginEnd">@dimen/margin8</item>
         <item name="android:layout_marginStart">@dimen/margin8</item>
         <item name="android:layout_marginTop">24dp</item>
-        <item name="android:background">@drawable/button_favorite</item>
+<!--        <item name="android:background">@drawable/button_favorite</item>-->
     </style>
 
     <!-- Fragment RecipeStepDescription. -->
@@ -162,7 +162,6 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginStart">@dimen/padding16</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:fontFamily">serif</item>
         <item name="android:gravity">left</item>
         <item name="android:textSize">@dimen/text_size_24</item>
     </style>
@@ -173,7 +172,6 @@
         <item name="android:layout_height">@dimen/height80</item>
         <item name="android:background">@drawable/grid_color_selector</item>
         <item name="android:paddingStart">@dimen/padding16</item>
-        <item name="android:fontFamily">serif</item>
         <item name="android:freezesText">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">@dimen/padding8</item>

@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
+
 class RecipeStepDetail2ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+
     private var mFragmentList: ArrayList<RecipeStepDetail2Fragment> = ArrayList()
     //private val mFragmentTitleList: ArrayList<String> = ArrayList()
 

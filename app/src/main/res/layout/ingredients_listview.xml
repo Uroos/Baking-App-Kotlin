@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="1 Cup Flour dkdkdkkd kddkkdkdkd dkkdkdk kdkdkdkd kdkdkdk dkdkdkkd dkdkdkkdkd dkkkkkd kkk"
+        tools:text="1 Cup Flour"
         android:maxLines="2"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
