@@ -3,11 +3,13 @@ package com.example.home.mybakingappone.ui
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.ViewGroup
 
 
 class RecipeStepDetail2ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
-    private var mFragmentList: ArrayList<RecipeStepDetail2Fragment> = ArrayList()
+     var mFragmentList: ArrayList<RecipeStepDetail2Fragment> = ArrayList()
     //private val mFragmentTitleList: ArrayList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
@@ -22,4 +24,10 @@ class RecipeStepDetail2ViewPagerAdapter(manager: FragmentManager) : FragmentPage
         mFragmentList = fragmentList
         //mFragmentTitleList.add(title)
     }
+
+//    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+//        super.destroyItem(container, position, `object`)
+//        mFragmentList.removeAt(position)
+//
+//    }
 }

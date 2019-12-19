@@ -106,6 +106,7 @@ class VideoFragment2 : Fragment() {
     }
 
     fun releasePlayer() {
+        Log.v("VideoFragment", "VideoFragment being released")
         if (player != null) {
             updateStartPosition()
             player!!.stop()

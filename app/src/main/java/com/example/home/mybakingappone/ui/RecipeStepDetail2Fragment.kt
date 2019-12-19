@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,6 +116,7 @@ class RecipeStepDetail2Fragment : Fragment() {
     }
 
     fun releasePlayer() {
+        Log.v("VideoFragment", "VideoFragment being released")
         if (player != null) {
             updateStartPosition()
             player!!.stop()
@@ -143,6 +145,7 @@ class RecipeStepDetail2Fragment : Fragment() {
                 player = ExoPlayerFactory.newSimpleInstance(DefaultRenderersFactory(getActivity()),
                         DefaultTrackSelector(adaptiveTrackSelectionFactory), DefaultLoadControl())
                 playerView.setPlayer(player)
+                VideoFragment2.Position.playWhenReady=true
                 player!!.setPlayWhenReady(VideoFragment2.Position.playWhenReady)
                 player!!.seekTo(VideoFragment2.Position.currentWindow, playbackPosition)
 

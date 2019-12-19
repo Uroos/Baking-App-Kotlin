@@ -14,17 +14,14 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import com.example.home.mybakingappone.R
 import com.example.home.mybakingappone.model.Recipes2
 import com.example.home.mybakingappone.model.Steps2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
-import android.support.v4.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.widget.TextView
+
 
 class RecipeStepDetail2 : AppCompatActivity() {
     private var description: String = ""
@@ -34,11 +31,12 @@ class RecipeStepDetail2 : AppCompatActivity() {
     private var steps: ArrayList<Steps2>? = null
     private var recipe: Recipes2 = Recipes2()
     private var viewPager: ViewPager? = null
-    private var tabLayout: TabLayout?=null
+    private var tabLayout: TabLayout? = null
     private val toolbar: Toolbar? = null
     var i: Int = 0
-    var viewPagerNumber:Int = 0
+    var viewPagerNumber: Int = 0
     lateinit var fragmentManager: FragmentManager
+    var exPosition:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,13 +70,13 @@ class RecipeStepDetail2 : AppCompatActivity() {
             val token = object : TypeToken<ArrayList<Steps2>>() {}
             steps = Gson().fromJson<ArrayList<Steps2>>(json, token.type)
         }
-            setupViewPager()
-            viewPager!!.setCurrentItem(position,true)
+        setupViewPager()
+        viewPager!!.setCurrentItem(position, true)
 
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-           // this if is not called with following file added to the manifest, which DOES save the playback position.
-           // android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-           // Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
+            // this if is not called with following file added to the manifest, which DOES save the playback position.
+            // android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            // Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
 
             // Only set the toolbar when in portrait mode.
             toolbar.visibility = View.VISIBLE
@@ -97,7 +95,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
             next.setOnClickListener() {
                 i += 1
                 if (i < steps!!.size) {
-                    viewPager!!.setCurrentItem(i,true)
+                    viewPager!!.setCurrentItem(i, true)
 
                 } else {
                     Toast.makeText(this, "No more steps", Toast.LENGTH_SHORT).show()
@@ -106,9 +104,9 @@ class RecipeStepDetail2 : AppCompatActivity() {
         }
     }
 
-    private fun setupViewPager (){
+    private fun setupViewPager() {
         val adapter = RecipeStepDetail2ViewPagerAdapter(supportFragmentManager)
-        var fragmentListSteps:ArrayList<RecipeStepDetail2Fragment> = ArrayList()
+        var fragmentListSteps: ArrayList<RecipeStepDetail2Fragment> = ArrayList()
 
         //Creating instances of all the fragments viewpager will display and storing in a list
         (0 until recipe.steps!!.size).forEach { i ->
@@ -129,17 +127,43 @@ class RecipeStepDetail2 : AppCompatActivity() {
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 viewPagerNumber = position
+
+                //currentFragment.releasePlayer()
             }
 
             override fun onPageSelected(position: Int) {
                 viewPagerNumber = position
                 i = viewPagerNumber
+                Log.v("VideoFragment", "VideoFragment number is: "+viewPagerNumber)
+                val currentfragment = adapter.mFragmentList.get(position)
+                currentfragment.player!!.playWhenReady=true
+
+                if(exPosition < position) {
+                    // Pause previous fragment
+                    // handle swipe LEFT
+                    if(position>0) {
+                        val exfragment = adapter.mFragmentList.get(exPosition)
+                        if (exfragment != null && exfragment is RecipeStepDetail2Fragment) {
+                            exfragment.player!!.playWhenReady=false
+                        }
+                    }
+                } else if(exPosition > position){
+                    // Pause next fragment
+                    // handle swipe RIGHT
+                    if(position < adapter.mFragmentList.size-1){
+                        val exfragment = adapter.mFragmentList.get(exPosition)
+                        if (exfragment != null && exfragment is RecipeStepDetail2Fragment) {
+                            exfragment.player!!.playWhenReady=false
+                        }
+                    }
+                }
+                exPosition = position; // Update ex position
                 //Toast.makeText(this@RecipeStepDetail2, "view pager number is: " + viewPagerNumber, Toast.LENGTH_SHORT).show()
             }
         })
 
         for (i in 0 until tabLayout!!.tabCount) {
-            Log.v("RecipeStepdetail", "size of tabs is "+tabLayout!!.tabCount)
+            Log.v("RecipeStepdetail", "size of tabs is " + tabLayout!!.tabCount)
             val tab = tabLayout!!.getTabAt(i)
             tab!!.setCustomView(getTabView(i))
         }
@@ -152,6 +176,7 @@ class RecipeStepDetail2 : AppCompatActivity() {
         tv.setText(position.toString())
         return v
     }
+
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         outState!!.putString("url", videourl)
         super.onSaveInstanceState(outState, outPersistentState)
