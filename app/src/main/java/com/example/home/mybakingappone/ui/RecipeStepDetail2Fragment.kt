@@ -134,19 +134,20 @@ class RecipeStepDetail2Fragment : Fragment() {
                     DefaultTrackSelector(adaptiveTrackSelectionFactory), DefaultLoadControl());
             playerView.setPlayer(player)
             playerView.hideController()
-            player!!.setPlayWhenReady(true)
+            player!!.setPlayWhenReady(playWhenReady)
 
         } else {
             if (player == null) {
                 // a factory to create an AdaptiveVideoTrackSelection
+                Log.v("VideoFragment", "VideoFragment player is null being initialized" )
+
                 Timber.v("player is: " + player)
                 val adaptiveTrackSelectionFactory = AdaptiveTrackSelection.Factory(VideoFragment2.Position.BANDWIDTH_METER)
                 // let the factory create a player instance with default components
                 player = ExoPlayerFactory.newSimpleInstance(DefaultRenderersFactory(getActivity()),
                         DefaultTrackSelector(adaptiveTrackSelectionFactory), DefaultLoadControl())
                 playerView.setPlayer(player)
-                VideoFragment2.Position.playWhenReady=true
-                player!!.setPlayWhenReady(VideoFragment2.Position.playWhenReady)
+                player!!.setPlayWhenReady(playWhenReady)
                 player!!.seekTo(VideoFragment2.Position.currentWindow, playbackPosition)
 
             }else{
@@ -207,13 +208,15 @@ class RecipeStepDetail2Fragment : Fragment() {
         hideSystemUi()
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer(urlToDisplay)
+
         }
     }
 
     override fun onPause() {
         super.onPause()
         if (Util.SDK_INT <= 23) {
-            Timber.v("onPause");
+            Timber.v("onPause")
+            //Log.v("VideoFragment", "VideoFragment player is null " )
             releasePlayer();
         }
     }

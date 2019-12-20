@@ -22,6 +22,8 @@ import com.example.home.mybakingappone.model.Steps2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+private const val VIDEO_URL = "url"
+private const val VIEW_PAGER_NUMBER = "view_pager_number"
 
 class RecipeStepDetail2 : AppCompatActivity() {
     private var description: String = ""
@@ -42,6 +44,9 @@ class RecipeStepDetail2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_step_detail_viewpager)
 
+        if(savedInstanceState!=null){
+            viewPagerNumber=savedInstanceState.getInt(VIEW_PAGER_NUMBER)
+        }
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.visibility = View.GONE
 
@@ -123,28 +128,53 @@ class RecipeStepDetail2 : AppCompatActivity() {
         viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
+//                Log.v("VideoFragment", "VideoFragment onPageScrollStateChanged ")
+//                val currentfragment = adapter.mFragmentList.get(viewPagerNumber)
+//                // On rotation player becomes null
+//
+//                if(currentfragment.player!=null) {
+//                    Log.v("VideoFragment", "VideoFragment in onPageScrolled player is not null")
+//                }else{
+//                    Log.v("VideoFragment", "VideoFragment in onPageScrolled player is null")
+//                }
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                viewPagerNumber = position
-
-                //currentFragment.releasePlayer()
+//                viewPagerNumber = position
+//                Log.v("VideoFragment", "VideoFragment onPageScrolled " )
+//                val currentfragment = adapter.mFragmentList.get(viewPagerNumber)
+//                // On rotation player becomes null
+//
+//                if(currentfragment.player!=null) {
+//                    Log.v("VideoFragment", "VideoFragment in onPageScrolled player is not null")
+//                }else{
+//                    Log.v("VideoFragment", "VideoFragment in onPageScrolled player is null")
+//                }
             }
 
             override fun onPageSelected(position: Int) {
                 viewPagerNumber = position
                 i = viewPagerNumber
-                Log.v("VideoFragment", "VideoFragment number is: "+viewPagerNumber)
-                val currentfragment = adapter.mFragmentList.get(position)
-                currentfragment.player!!.playWhenReady=true
+                Log.v("VideoFragment", "VideoFragment onPageSelected ")
+                val currentfragment = adapter.mFragmentList.get(viewPagerNumber)
+                // On rotation player becomes null
 
+                //Set current player to start playing
+                if(currentfragment.player!=null) {
+                    currentfragment.player!!.playWhenReady = true
+                }else{
+                    Log.v("VideoFragment", "VideoFragment player is null")
+                }
+
+                // Pause previous fragment
                 if(exPosition < position) {
-                    // Pause previous fragment
                     // handle swipe LEFT
                     if(position>0) {
                         val exfragment = adapter.mFragmentList.get(exPosition)
                         if (exfragment != null && exfragment is RecipeStepDetail2Fragment) {
-                            exfragment.player!!.playWhenReady=false
+                            if(exfragment.player!=null) {
+                                exfragment.player!!.playWhenReady = false
+                            }
                         }
                     }
                 } else if(exPosition > position){
@@ -153,7 +183,9 @@ class RecipeStepDetail2 : AppCompatActivity() {
                     if(position < adapter.mFragmentList.size-1){
                         val exfragment = adapter.mFragmentList.get(exPosition)
                         if (exfragment != null && exfragment is RecipeStepDetail2Fragment) {
-                            exfragment.player!!.playWhenReady=false
+                            if(exfragment.player!=null) {
+                                exfragment.player!!.playWhenReady = false
+                            }
                         }
                     }
                 }
@@ -178,7 +210,8 @@ class RecipeStepDetail2 : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        outState!!.putString("url", videourl)
+        outState!!.putString(VIDEO_URL, videourl)
+        outState!!.putInt(VIEW_PAGER_NUMBER,viewPagerNumber)
         super.onSaveInstanceState(outState, outPersistentState)
     }
 

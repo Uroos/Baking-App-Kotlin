@@ -48,6 +48,7 @@
             android:name=".ui.RecipeStepDetail2"
             android:label="Recipe Steps"
             android:parentActivityName=".ui.RecipeDetail2"
+            android:screenOrientation="portrait"
             android:theme="@style/RecipeStepDetailTheme" />
 
         <service android:name=".RecipeUpdateService2" />

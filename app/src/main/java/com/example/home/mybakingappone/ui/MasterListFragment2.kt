@@ -46,7 +46,7 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
     private lateinit var onLineBroadCastReceiver: BroadcastReceiver
     private var connectedAlready: Boolean = false
 
-    private var recipes: ArrayList<Recipes2>? = ArrayList()
+    private var recipes: List<Recipes2>? = ArrayList()
     private var recipeAdapter: MasterListAdapter2? = null
     private var layoutManager: GridLayoutManager? = null
     private var frameLayout: FrameLayout? = null
@@ -147,8 +147,13 @@ class MasterListFragment2 : Fragment(), OkHttpHandler2.OnUpdateListener, MasterL
                 showErrorMessage()
             }
         }
+        val db =AppDatabase2.getsInstance(context2)
 
-        setupData()
+        if(db==null) {
+            setupData()
+        }else{
+            recipes=db.taskDao().loadAllRecipes()
+        }
         onLineIntentFilter = IntentFilter()
         onLineIntentFilter!!.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         onLineBroadCastReceiver = OnLineBroadCastReceiver
