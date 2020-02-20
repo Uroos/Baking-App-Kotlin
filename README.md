@@ -1,28 +1,18 @@
 # Baking-App
-This is a Baking App that allows Udacity’s resident baker-in-chief, Miriam, to share her recipes with the world. Its allows a user to 
-select a recipe and see video-guided steps for how to complete it.
+This is a Baking App that converts existing app written in Java to Kotlin with improved features like recently viewed recipe list and favorite list. This is achieved using Room Database. Plus it adds swiping functionality for viewing the recipes and the various steps of the recipe.
 
-This app was taken from a functional state to a production-ready state. It involved finding and handling error cases, adding accessibility features, allowing for localization, adding a widget, and adding a library.
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-00-56.png" width="200" height="300" />
 
-Through this app I learned to create and implement apps where I am responsible for designing and planning the steps I need to take to create a production-ready app. It was up to me to figure things out. I also learned how to handle unexpected input in the data.
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-00-59.png" width="200" height="300" />
 
-This app uses:
--MediaPlayer/Exoplayer to display videos.
--Handles error cases in Android.
--A widget to enhance your app experience.
--Broadcast receiver to check for wifi connectivity and then automatically load data
--Intent Service that updates the widget when user selects a favorite recipe
--Leverages third-party libraries like butterknife, gson, timber, picasso
--Use Fragments to create a responsive design that works on phones and tablets.
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-01-06.png" width="200" height="300" />
 
-The recipe listing is gotten from a JSON file containing the recipes' instructions, ingredients, videos and images. However it is not a properly filled file and some recipes have a video, an image, or no visual media at all.
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-01-11.png" width="200" height="300" />
 
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-01-18.png" width="200" height="300" />
 
-<img src="https://github.com/Uroos/Baking-App/blob/master/Screenshot_20181222-221419.png" width="200" height="300" />
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-02-12.png" width="400" height="300" />
 
+<img src="https://github.com/Uroos/Baking-App-Kotlin/blob/master/Screenshot_2020-02-12-09-02-52.png" width="200" height="300" />
 
-<img src="https://github.com/Uroos/Baking-App/blob/master/Screenshot_20181222-221429.png" width="200" height="300" />
-
-
-<img src="https://github.com/Uroos/Baking-App/blob/master/Screenshot_20181222-221509.png" width="200" height="300" />
 
